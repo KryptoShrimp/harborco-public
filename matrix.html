@@ -28,6 +28,60 @@
             --gray-badge: #242e40;
         }
 
+        html.light {
+            --bg: #f4f5f7;
+            --card: #ffffff;
+            --tile: #e8eaed;
+            --tile-border: #d1d5db;
+            --tile-hover: #dde0e4;
+            --accent: #0891b2;
+            --accent-glow: rgba(8, 145, 178, 0.15);
+            --accent-dark: #065f73;
+            --text: #1a1a2e;
+            --text-dim: #6b7280;
+            --green: #059669;
+            --green-bg: rgba(5, 150, 105, 0.1);
+            --amber: #d97706;
+            --amber-bg: rgba(217, 119, 6, 0.1);
+            --red: #dc2626;
+            --red-bg: rgba(220, 38, 38, 0.08);
+            --gray-badge: #d1d5db;
+        }
+
+        html.light .proposal-display-cell {
+            background: var(--accent);
+        }
+
+        html.light .proposal-display-cell span {
+            color: #ffffff;
+        }
+
+        html.light .deal-block {
+            background: var(--accent);
+        }
+
+        html.light .deal-value,
+        html.light .deal-issue {
+            color: #ffffff;
+        }
+
+        html.light .deal-issue {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        html.light .submit-btn {
+            color: #ffffff;
+        }
+
+        html.light .proposal-cell.active {
+            background: rgba(8, 145, 178, 0.15);
+        }
+
+        html.light .tile.selected,
+        html.light .matrix-cell.checked::after {
+            color: var(--green);
+        }
+
         html, body {
             width: 100%; height: 100%;
             background: var(--bg);
@@ -79,6 +133,25 @@
 
         .tab-link:hover { color: var(--text); background: var(--tile); }
         .tab-link.active { color: var(--accent); background: rgba(34, 211, 238, 0.1); }
+
+        .theme-toggle {
+            width: 36px; height: 36px;
+            border-radius: 8px;
+            border: 1px solid var(--tile-border);
+            background: var(--tile);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.15s;
+            margin-left: 8px;
+            flex-shrink: 0;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+        }
 
         /* ── MATRIX ── */
         .matrix-wrapper {
@@ -519,6 +592,7 @@
         <div class="header-right">
             <a href="matrix.html" class="tab-link active">Priority Matrix</a>
             <a href="history.html" class="tab-link">Vote History</a>
+            <button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode"></button>
         </div>
     </div>
 
@@ -556,6 +630,24 @@
     </div>
 
     <script>
+        // ── THEME TOGGLE ──
+        var savedTheme = localStorage.getItem('harborco_theme') || 'dark';
+        if (savedTheme === 'light') document.documentElement.classList.add('light');
+
+        var toggleBtn = document.getElementById('themeToggle');
+        function updateToggleIcon() {
+            var isLight = document.documentElement.classList.contains('light');
+            toggleBtn.textContent = isLight ? '\u2600\uFE0F' : '\uD83C\uDF19';
+        }
+        updateToggleIcon();
+
+        toggleBtn.addEventListener('click', function() {
+            document.documentElement.classList.toggle('light');
+            var isLight = document.documentElement.classList.contains('light');
+            localStorage.setItem('harborco_theme', isLight ? 'light' : 'dark');
+            updateToggleIcon();
+        });
+
         var issues = [
             { id: 'A', name: 'A: Industry Mix', options: ['Primarily Dirty', 'Clean/Dirty Mix', 'All Clean'] },
             { id: 'B', name: 'B: Ecological Impact', options: ['Some Harm', 'Maintain & Repair', 'Improve Ecology'] },
