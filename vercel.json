@@ -1,5 +1,6 @@
 {
-  "rewrites": [
-    { "source": "/", "destination": "/matrix.html" }
+  "redirects": [
+    { "source": "/", "destination": "/matrix.html", "permanent": false },
+    { "source": "/index.html", "destination": "/matrix.html", "permanent": false }
   ]
 }
