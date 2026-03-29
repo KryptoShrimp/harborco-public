@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote History — Harborco</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0b0e14;
+            --card: #151a24;
+            --tile: #1a2030;
+            --tile-border: #242e40;
+            --accent: #22d3ee;
+            --accent-glow: rgba(34, 211, 238, 0.2);
+            --text: #e8edf5;
+            --text-dim: #5a6a82;
+            --green: #34d399;
+            --green-bg: rgba(52, 211, 153, 0.12);
+            --amber: #fbbf24;
+            --amber-bg: rgba(251, 191, 36, 0.12);
+            --red: #f87171;
+            --red-bg: rgba(248, 113, 113, 0.12);
+            --gray-badge: #242e40;
+        }
+
+        html, body {
+            width: 100%; height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            padding: 16px 24px;
+            gap: 16px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            height: 38px;
+        }
+
+        .header-left { display: flex; align-items: center; gap: 14px; }
+
+        .logo-bar {
+            width: 6px; height: 30px;
+            background: var(--accent); border-radius: 2px;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .header-title {
+            font-size: 28px; font-weight: 800;
+            letter-spacing: 1.5px; text-transform: uppercase;
+        }
+
+        .header-title span { color: var(--accent); }
+        .header-right { display: flex; align-items: center; gap: 4px; }
+
+        .tab-link {
+            padding: 6px 18px; border-radius: 6px;
+            font-size: 14px; font-weight: 600;
+            text-decoration: none; color: var(--text-dim);
+            transition: all 0.15s; letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .tab-link:hover { color: var(--text); background: var(--tile); }
+        .tab-link.active { color: var(--accent); background: rgba(34, 211, 238, 0.1); }
+
+        /* ── CONTENT ── */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            gap: 12px;
+            color: var(--text-dim);
+        }
+
+        .empty-icon { font-size: 48px; opacity: 0.4; }
+        .empty-text { font-size: 16px; font-weight: 600; }
+        .empty-hint { font-size: 13px; }
+
+        /* ── ROUND CARD ── */
+        .round-card {
+            background: var(--card);
+            border: 1px solid var(--tile-border);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .round-card.pass { border-left: 4px solid var(--green); }
+        .round-card.ok { border-left: 4px solid var(--amber); }
+        .round-card.fail { border-left: 4px solid var(--red); }
+
+        .round-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .round-num {
+            font-size: 28px; font-weight: 800;
+            color: var(--accent);
+            min-width: 80px;
+        }
+
+        .round-result {
+            font-size: 28px;
+        }
+
+        .round-support {
+            font-size: 16px; font-weight: 700;
+            margin-left: auto;
+        }
+
+        .round-support.pass-text { color: var(--green); }
+        .round-support.ok-text { color: var(--amber); }
+        .round-support.fail-text { color: var(--red); }
+
+        .round-time {
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-left: 12px;
+        }
+
+        /* ── DEAL PARAMETERS ── */
+        .deal-params {
+            display: flex;
+            gap: 6px;
+        }
+
+        .deal-block {
+            flex: 1;
+            background: var(--accent);
+            border-radius: 8px;
+            padding: 10px 8px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 3px;
+        }
+
+        .deal-issue {
+            font-size: 10px;
+            font-weight: 700;
+            color: rgba(11, 14, 20, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .deal-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--bg);
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        /* ── PARTY BREAKDOWN ── */
+        .party-breakdown {
+            display: flex;
+            gap: 6px;
+        }
+
+        .party-chip {
+            flex: 1;
+            border-radius: 6px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            text-align: center;
+        }
+
+        .party-chip.supports {
+            background: var(--green-bg);
+            border: 1px solid rgba(52, 211, 153, 0.25);
+        }
+
+        .party-chip.opposed {
+            background: var(--red-bg);
+            border: 1px solid rgba(248, 113, 113, 0.25);
+        }
+
+        .party-chip.undecided {
+            background: var(--tile);
+            border: 1px solid var(--tile-border);
+        }
+
+        .chip-name {
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chip-name.supports { color: var(--green); }
+        .chip-name.opposed { color: var(--red); }
+        .chip-name.undecided { color: var(--text-dim); }
+
+        .chip-status {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .chip-status.supports { color: var(--green); }
+        .chip-status.opposed { color: var(--red); }
+        .chip-status.undecided { color: var(--text-dim); }
+
+        /* ── BOTTOM ── */
+        .bottom-bar {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0 0;
+        }
+
+        .round-count {
+            font-size: 13px; font-weight: 600;
+            color: var(--text-dim);
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+
+        .round-count span { color: var(--accent); font-weight: 800; }
+
+        .clear-btn {
+            padding: 8px 20px;
+            background: var(--tile); color: var(--text-dim);
+            border: 1px solid var(--tile-border);
+            border-radius: 6px;
+            font-size: 13px; font-weight: 600;
+            cursor: pointer; font-family: 'Outfit', sans-serif;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            transition: all 0.15s;
+        }
+
+        .clear-btn:hover { border-color: var(--red); color: var(--red); }
+
+        @media (max-height: 900px) {
+            body { padding: 10px 18px; gap: 12px; }
+            .header { height: 32px; }
+            .header-title { font-size: 22px; }
+            .round-card { padding: 14px; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <div class="logo-bar"></div>
+            <div class="header-title"><span>Harborco</span> Port Development</div>
+        </div>
+        <div class="header-right">
+            <a href="matrix.html" class="tab-link">Priority Matrix</a>
+            <a href="history.html" class="tab-link active">Vote History</a>
+        </div>
+    </div>
+
+    <div class="content" id="content"></div>
+
+    <div class="bottom-bar">
+        <div class="round-count">Rounds: <span id="roundCount">0</span></div>
+        <button class="clear-btn" id="clearBtn">Clear History</button>
+    </div>
+
+    <script>
+        var issues = [
+            { id: 'A', name: 'Industry Mix', options: ['Primarily Dirty', 'Clean/Dirty Mix', 'All Clean'] },
+            { id: 'B', name: 'Ecological Impact', options: ['Some Harm', 'Maintain & Repair', 'Improve Ecology'] },
+            { id: 'C', name: 'Employment Rules', options: ['Unlimited Union', '2:1 Quota', '1:1 Quota', 'No Preference'] },
+            { id: 'D', name: 'Federal Loan', options: ['$3B', '$2B', '$1B', 'No Loan'] },
+            { id: 'E', name: 'Port Compensation', options: ['$600M', '$450M', '$300M', '$150M', 'None'] },
+        ];
+
+        var partyDefs = [
+            { id: 'env', name: 'Env. League' },
+            { id: 'unions', name: 'Labor Unions' },
+            { id: 'ports', name: 'Other Ports' },
+            { id: 'dcr', name: 'Federal DCR' },
+            { id: 'gov', name: 'Gov. Sherwood' },
+            { id: 'harborco', name: 'Harborco' },
+        ];
+
+        var statusNames = ['Undecided', 'Supports', 'Opposed'];
+        var statusClasses = ['undecided', 'supports', 'opposed'];
+
+        function mk(tag, cls, text) {
+            var e = document.createElement(tag);
+            if (cls) e.className = cls;
+            if (text) e.textContent = text;
+            return e;
+        }
+
+        function loadVotes() {
+            try { return JSON.parse(localStorage.getItem('harborco_votes')) || []; }
+            catch(e) { return []; }
+        }
+
+        function roundEmoji(support) {
+            var others = support - 1;
+            if (others >= 5) return '\uD83E\uDD73';
+            if (others === 4) return '\uD83D\uDE0A';
+            return '\uD83D\uDC80';
+        }
+
+        function resultClass(support) {
+            var others = support - 1;
+            if (others >= 5) return 'pass';
+            if (others === 4) return 'ok';
+            return 'fail';
+        }
+
+        function resultLabel(support) {
+            var others = support - 1;
+            if (others >= 5) return 'License Approved';
+            if (others === 4) return '4/5 Support';
+            return others + '/5 Support';
+        }
+
+        function formatTime(ts) {
+            try {
+                var d = new Date(ts);
+                return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) +
+                       ', ' + d.toLocaleDateString([], { month: 'short', day: 'numeric' });
+            } catch (e) { return ''; }
+        }
+
+        function render() {
+            var votes = loadVotes();
+            var content = document.getElementById('content');
+            while (content.firstChild) content.removeChild(content.firstChild);
+            document.getElementById('roundCount').textContent = votes.length;
+
+            if (votes.length === 0) {
+                var empty = mk('div', 'empty-state');
+                empty.appendChild(mk('div', 'empty-icon', '\uD83D\uDDF3\uFE0F'));
+                empty.appendChild(mk('div', 'empty-text', 'No votes recorded yet'));
+                empty.appendChild(mk('div', 'empty-hint', 'Submit a vote from the Priority Matrix to start tracking rounds.'));
+                content.appendChild(empty);
+                return;
+            }
+
+            // Newest first
+            for (var i = votes.length - 1; i >= 0; i--) {
+                var v = votes[i];
+                var cls = resultClass(v.support);
+                var card = mk('div', 'round-card ' + cls);
+
+                // Header row: round number, emoji, result, time
+                var header = mk('div', 'round-header');
+                header.appendChild(mk('div', 'round-num', 'Round ' + v.round));
+                header.appendChild(mk('div', 'round-result', roundEmoji(v.support)));
+                var supEl = mk('div', 'round-support ' + cls + '-text', resultLabel(v.support));
+                header.appendChild(supEl);
+                header.appendChild(mk('div', 'round-time', formatTime(v.timestamp)));
+                card.appendChild(header);
+
+                // Deal parameters
+                var params = mk('div', 'deal-params');
+                issues.forEach(function(iss) {
+                    var block = mk('div', 'deal-block');
+                    block.appendChild(mk('div', 'deal-issue', iss.name));
+                    var optIdx = v.proposal[iss.id] || 0;
+                    block.appendChild(mk('div', 'deal-value', iss.options[optIdx]));
+                    params.appendChild(block);
+                });
+                card.appendChild(params);
+
+                // Party breakdown
+                var breakdown = mk('div', 'party-breakdown');
+                partyDefs.forEach(function(p) {
+                    var status = v.parties[p.id] || 0;
+                    var scls = statusClasses[status];
+                    var chip = mk('div', 'party-chip ' + scls);
+                    chip.appendChild(mk('div', 'chip-name ' + scls, p.name));
+                    chip.appendChild(mk('div', 'chip-status ' + scls, statusNames[status]));
+                    breakdown.appendChild(chip);
+                });
+                card.appendChild(breakdown);
+
+                content.appendChild(card);
+            }
+        }
+
+        render();
+
+        document.getElementById('clearBtn').addEventListener('click', function() {
+            localStorage.removeItem('harborco_votes');
+            render();
+        });
+    </script>
+</body>
+</html>

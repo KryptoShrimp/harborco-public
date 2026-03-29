@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote Log — Harborco</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0b0e14;
+            --card: #151a24;
+            --tile: #1a2030;
+            --tile-border: #242e40;
+            --tile-hover: #212b3d;
+            --accent: #22d3ee;
+            --accent-glow: rgba(34, 211, 238, 0.2);
+            --text: #e8edf5;
+            --text-dim: #5a6a82;
+            --green: #34d399;
+            --green-bg: rgba(52, 211, 153, 0.12);
+            --amber: #fbbf24;
+            --amber-bg: rgba(251, 191, 36, 0.12);
+            --red: #f87171;
+            --red-bg: rgba(248, 113, 113, 0.12);
+            --gray-badge: #242e40;
+        }
+
+        html, body {
+            width: 100%; height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            padding: 12px 20px;
+            gap: 10px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            height: 38px;
+        }
+
+        .header-left {
+            display: flex; align-items: center; gap: 14px;
+        }
+
+        .logo-bar {
+            width: 6px; height: 30px;
+            background: var(--accent);
+            border-radius: 2px;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .header-title {
+            font-size: 28px; font-weight: 800;
+            letter-spacing: 1.5px; text-transform: uppercase;
+        }
+
+        .header-title span { color: var(--accent); }
+
+        .header-right {
+            display: flex; align-items: center; gap: 4px;
+        }
+
+        .tab-link {
+            padding: 6px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--text-dim);
+            transition: all 0.15s;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .tab-link:hover {
+            color: var(--text);
+            background: var(--tile);
+        }
+
+        .tab-link.active {
+            color: var(--accent);
+            background: rgba(34, 211, 238, 0.1);
+        }
+
+        /* ── VOTE LOG ── */
+        .log-wrapper {
+            flex: 1;
+            overflow: auto;
+            min-height: 0;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            gap: 12px;
+            color: var(--text-dim);
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            opacity: 0.4;
+        }
+
+        .empty-text {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .empty-hint {
+            font-size: 13px;
+        }
+
+        .vote-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 4px;
+        }
+
+        .vote-table th {
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-dim);
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--tile-border);
+        }
+
+        .vote-table th.center {
+            text-align: center;
+        }
+
+        .vote-row {
+            background: var(--card);
+        }
+
+        .vote-row td {
+            padding: 10px 12px;
+            vertical-align: middle;
+        }
+
+        .vote-row td:first-child {
+            border-radius: 6px 0 0 6px;
+        }
+
+        .vote-row td:last-child {
+            border-radius: 0 6px 6px 0;
+        }
+
+        .round-num {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--accent);
+            text-align: center;
+            width: 50px;
+        }
+
+        .proposal-code {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--text);
+            font-family: 'Outfit', monospace;
+        }
+
+        .support-count {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 700;
+            width: 60px;
+        }
+
+        .support-count.pass {
+            color: var(--green);
+        }
+
+        .support-count.fail {
+            color: var(--red);
+        }
+
+        .party-badges {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .mini-badge {
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .mini-supports { background: var(--green-bg); color: var(--green); }
+        .mini-opposed { background: var(--red-bg); color: var(--red); }
+        .mini-undecided { background: var(--gray-badge); color: var(--text-dim); }
+
+        .vote-time {
+            font-size: 12px;
+            color: var(--text-dim);
+            white-space: nowrap;
+        }
+
+        /* ── BOTTOM BAR ── */
+        .bottom-bar {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0 0;
+        }
+
+        .vote-count-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .vote-count-label span {
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        .clear-btn {
+            padding: 8px 20px;
+            background: var(--tile);
+            color: var(--text-dim);
+            border: 1px solid var(--tile-border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.15s;
+        }
+
+        .clear-btn:hover {
+            border-color: var(--red);
+            color: var(--red);
+        }
+
+        @media (max-height: 900px) {
+            body { padding: 8px 16px; gap: 6px; }
+            .header { height: 32px; }
+            .header-title { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <div class="logo-bar"></div>
+            <div class="header-title"><span>Harborco</span> Port Development</div>
+        </div>
+        <div class="header-right">
+            <a href="index.html" class="tab-link">Dashboard</a>
+            <a href="matrix.html" class="tab-link">Priority Matrix</a>
+            <a href="votes.html" class="tab-link active">Vote Log</a>
+        </div>
+    </div>
+
+    <div class="log-wrapper" id="logWrapper"></div>
+
+    <div class="bottom-bar">
+        <div class="vote-count-label">Rounds: <span id="roundCount">0</span></div>
+        <button class="clear-btn" id="clearBtn">Clear History</button>
+    </div>
+
+    <script>
+        var issues = [
+            { id: 'A', options: ['Primarily Dirty', 'Clean/Dirty Mix', 'All Clean'] },
+            { id: 'B', options: ['Some Harm', 'Maintain & Repair', 'Improve Ecology'] },
+            { id: 'C', options: ['Unlimited Union', '2:1 Quota', '1:1 Quota', 'No Preference'] },
+            { id: 'D', options: ['$3B', '$2B', '$1B', 'No Loan'] },
+            { id: 'E', options: ['$600M', '$450M', '$300M', '$150M', 'None'] },
+        ];
+
+        var partyNames = {
+            env: 'Env. League', unions: 'Labor', ports: 'Ports',
+            dcr: 'DCR', gov: 'Gov.', harborco: 'Harborco'
+        };
+        var partyOrder = ['env', 'unions', 'ports', 'dcr', 'gov', 'harborco'];
+
+        var statusClasses = ['mini-undecided', 'mini-supports', 'mini-opposed'];
+        var statusLabels = ['?', 'Y', 'N'];
+
+        function loadVotes() {
+            try {
+                return JSON.parse(localStorage.getItem('harborco_votes')) || [];
+            } catch (e) { return []; }
+        }
+
+        function proposalString(prop) {
+            return issues.map(function(iss) {
+                return iss.id + ((prop[iss.id] || 0) + 1);
+            }).join(' ');
+        }
+
+        function formatTime(ts) {
+            try {
+                var d = new Date(ts);
+                return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) +
+                       ' ' + d.toLocaleDateString([], { month: 'short', day: 'numeric' });
+            } catch (e) { return ''; }
+        }
+
+        function mk(tag, cls, text) {
+            var e = document.createElement(tag);
+            if (cls) e.className = cls;
+            if (text) e.textContent = text;
+            return e;
+        }
+
+        function render() {
+            var votes = loadVotes();
+            var wrapper = document.getElementById('logWrapper');
+            while (wrapper.firstChild) wrapper.removeChild(wrapper.firstChild);
+            document.getElementById('roundCount').textContent = votes.length;
+
+            if (votes.length === 0) {
+                var empty = mk('div', 'empty-state');
+                empty.appendChild(mk('div', 'empty-icon', '\uD83D\uDDF3\uFE0F'));
+                empty.appendChild(mk('div', 'empty-text', 'No votes recorded yet'));
+                empty.appendChild(mk('div', 'empty-hint', 'Submit a vote from the Dashboard to start tracking rounds.'));
+                wrapper.appendChild(empty);
+                return;
+            }
+
+            var table = mk('table', 'vote-table');
+
+            // Header
+            var thead = mk('thead');
+            var hrow = mk('tr');
+            ['#', 'Proposal', 'Support', 'Parties', 'Time'].forEach(function(h, i) {
+                var th = mk('th', (i === 0 || i === 2) ? 'center' : '', h);
+                hrow.appendChild(th);
+            });
+            thead.appendChild(hrow);
+            table.appendChild(thead);
+
+            // Body (newest first)
+            var tbody = mk('tbody');
+            for (var i = votes.length - 1; i >= 0; i--) {
+                var v = votes[i];
+                var tr = mk('tr', 'vote-row');
+
+                // Round number
+                tr.appendChild(mk('td', 'round-num', String(v.round)));
+
+                // Proposal
+                tr.appendChild(mk('td', 'proposal-code', proposalString(v.proposal)));
+
+                // Support count
+                var supTd = mk('td', 'support-count ' + (v.support >= 5 ? 'pass' : 'fail'), v.support + '/6');
+                tr.appendChild(supTd);
+
+                // Party badges
+                var badgeTd = mk('td');
+                var badgeWrap = mk('div', 'party-badges');
+                partyOrder.forEach(function(pid) {
+                    var status = v.parties[pid] || 0;
+                    var badge = mk('span', 'mini-badge ' + statusClasses[status],
+                        partyNames[pid] + ' ' + statusLabels[status]);
+                    badgeWrap.appendChild(badge);
+                });
+                badgeTd.appendChild(badgeWrap);
+                tr.appendChild(badgeTd);
+
+                // Time
+                tr.appendChild(mk('td', 'vote-time', formatTime(v.timestamp)));
+
+                tbody.appendChild(tr);
+            }
+            table.appendChild(tbody);
+            wrapper.appendChild(table);
+        }
+
+        render();
+
+        document.getElementById('clearBtn').addEventListener('click', function() {
+            localStorage.removeItem('harborco_votes');
+            render();
+        });
+    </script>
+</body>
+</html>

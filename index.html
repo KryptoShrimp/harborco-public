@@ -71,7 +71,29 @@
         .header-title span { color: var(--accent); }
 
         .header-right {
-            display: flex; align-items: center; gap: 8px;
+            display: flex; align-items: center; gap: 4px;
+        }
+
+        .tab-link {
+            padding: 6px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--text-dim);
+            transition: all 0.15s;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .tab-link:hover {
+            color: var(--text);
+            background: var(--tile);
+        }
+
+        .tab-link.active {
+            color: var(--accent);
+            background: rgba(34, 211, 238, 0.1);
         }
 
         /* ── ISSUES GRID ── */
@@ -362,7 +384,11 @@
             <div class="logo-bar"></div>
             <div class="header-title"><span>Harborco</span> Port Development</div>
         </div>
-        <div class="header-right"></div>
+        <div class="header-right">
+            <a href="index.html" class="tab-link active">Dashboard</a>
+            <a href="matrix.html" class="tab-link">Priority Matrix</a>
+            <a href="votes.html" class="tab-link">Vote Log</a>
+        </div>
     </div>
 
     <div class="issues">
@@ -469,10 +495,23 @@
     </div>
 
     <script>
+        const DEFAULTS = { A: 0, B: 0, C: 3, D: 0, E: 4 };
+
+        function loadProposal() {
+            try {
+                const saved = JSON.parse(localStorage.getItem('harborco_proposal'));
+                if (saved && typeof saved === 'object') return saved;
+            } catch (e) {}
+            return Object.assign({}, DEFAULTS);
+        }
+
+        function saveProposal() {
+            localStorage.setItem('harborco_proposal', JSON.stringify(state.selected));
+        }
+
         const state = {
-            selected: { A: 0, B: 0, C: 3, D: 0, E: 4 },
+            selected: loadProposal(),
             parties: { env: 0, unions: 0, ports: 0, dcr: 0, gov: 0, harborco: 1 },
-            votes: {}
         };
 
         const statuses = [
@@ -480,6 +519,14 @@
             { cls: 'badge-supports', text: 'Supports' },
             { cls: 'badge-opposed', text: 'Opposed' }
         ];
+
+        // Sync tile UI to match loaded state
+        document.querySelectorAll('.issue-row').forEach(row => {
+            const issue = row.dataset.issue;
+            row.querySelectorAll('.tile').forEach((t, i) => {
+                t.classList.toggle('selected', i === state.selected[issue]);
+            });
+        });
 
         // Tile clicks
         document.querySelectorAll('.issue-row').forEach(row => {
@@ -491,11 +538,12 @@
                         t.classList.toggle('selected', i === state.selected[issue]);
                     });
                     row.classList.add('has-selection');
+                    saveProposal();
                 });
             });
         });
 
-        // Party card clicks (only clickable parties, not Harborco)
+        // Party card clicks
         document.querySelectorAll('.party-card[data-party]').forEach(card => {
             card.addEventListener('click', () => {
                 const p = card.dataset.party;
@@ -511,14 +559,24 @@
         function updateSupport() {
             const total = Object.values(state.parties).filter(v => v === 1).length;
             document.querySelectorAll('.pip').forEach((p, i) => p.classList.toggle('on', i < total));
-            document.getElementById('supportLabel').textContent = `${total} / 6`;
-            // Need 5/6 supporting (4 of 5 others + Harborco) for FLA license
+            document.getElementById('supportLabel').textContent = total + ' / 6';
             document.getElementById('licenseBadge').classList.toggle('show', total >= 5);
         }
 
-        // Submit vote - triggers emoji animation based on support count
+        // Submit vote - save round + trigger animation
         document.getElementById('submitBtn').addEventListener('click', () => {
             const total = Object.values(state.parties).filter(v => v === 1).length;
+            // Save vote round
+            var votes = [];
+            try { votes = JSON.parse(localStorage.getItem('harborco_votes')) || []; } catch(e) {}
+            votes.push({
+                round: votes.length + 1,
+                proposal: Object.assign({}, state.selected),
+                parties: Object.assign({}, state.parties),
+                support: total,
+                timestamp: new Date().toISOString()
+            });
+            localStorage.setItem('harborco_votes', JSON.stringify(votes));
             triggerVoteAnimation(total);
         });
 
