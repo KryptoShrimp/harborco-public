@@ -623,7 +623,7 @@
             </div>
             <div class="rounds-zone" id="roundsZone"></div>
             <div class="bottom-actions-spacer"></div>
-            <button class="clear-btn" id="clearBtn">Clear Checks</button>
+            <button class="clear-btn" id="clearBtn">Reset Defaults</button>
             <button class="submit-btn" id="submitBtn">Submit Vote</button>
             <button class="clear-btn" id="clearVotesBtn">Clear Votes</button>
         </div>
@@ -673,16 +673,65 @@
             { cls: 'badge-opposed', text: 'Opposed' }
         ];
 
-        var proposal = Object.assign({}, DEFAULTS);
-        var partyState = { env: 0, unions: 0, ports: 0, dcr: 0, gov: 0, harborco: 1 };
+        var DEFAULT_PARTIES = { env: 0, unions: 0, ports: 0, dcr: 0, gov: 0, harborco: 1 };
 
-        var priorities = {};
-        partyDefs.forEach(function(p) {
-            priorities[p.id] = {};
-            issues.forEach(function(iss) {
-                priorities[p.id][iss.id] = new Set();
+        function loadProposal() {
+            try {
+                var s = JSON.parse(localStorage.getItem('harborco_proposal'));
+                if (s && typeof s === 'object') return s;
+            } catch(e) {}
+            return Object.assign({}, DEFAULTS);
+        }
+
+        function loadPartyState() {
+            try {
+                var s = JSON.parse(localStorage.getItem('harborco_parties'));
+                if (s && typeof s === 'object') return s;
+            } catch(e) {}
+            return Object.assign({}, DEFAULT_PARTIES);
+        }
+
+        function loadPriorities() {
+            var p = {};
+            try {
+                var s = JSON.parse(localStorage.getItem('harborco_priorities'));
+                if (s && typeof s === 'object') {
+                    partyDefs.forEach(function(pd) {
+                        p[pd.id] = {};
+                        issues.forEach(function(iss) {
+                            p[pd.id][iss.id] = new Set(s[pd.id] && s[pd.id][iss.id] ? s[pd.id][iss.id] : []);
+                        });
+                    });
+                    return p;
+                }
+            } catch(e) {}
+            partyDefs.forEach(function(pd) {
+                p[pd.id] = {};
+                issues.forEach(function(iss) {
+                    p[pd.id][iss.id] = new Set();
+                });
             });
-        });
+            return p;
+        }
+
+        function savePriorities() {
+            var obj = {};
+            partyDefs.forEach(function(pd) {
+                obj[pd.id] = {};
+                issues.forEach(function(iss) {
+                    obj[pd.id][iss.id] = Array.from(priorities[pd.id][iss.id]);
+                });
+            });
+            localStorage.setItem('harborco_priorities', JSON.stringify(obj));
+        }
+
+        function savePartyState() {
+            localStorage.setItem('harborco_parties', JSON.stringify(partyState));
+        }
+
+        var proposal = loadProposal();
+        var partyState = loadPartyState();
+        var priorities = loadPriorities();
 
         var totalOptions = issues.reduce(function(s, iss) { return s + iss.options.length; }, 0);
         var gapCount = issues.length - 1;
@@ -758,6 +807,7 @@
                         td.dataset.party = p.id;
                         td.dataset.issue = iss.id;
                         td.dataset.opt = optIdx;
+                        if (priorities[p.id][iss.id].has(optIdx)) td.classList.add('checked');
                         td.addEventListener('click', function() { toggleCell(td, p.id, iss.id, optIdx); });
                         tr.appendChild(td);
                     });
@@ -844,6 +894,7 @@
                     var badge = card.querySelector('.party-badge');
                     badge.className = 'party-badge ' + ns.cls;
                     badge.textContent = ns.text;
+                    savePartyState();
                     updateSupport();
                 });
                 row.appendChild(card);
@@ -869,6 +920,7 @@
                 set.add(optIdx);
                 td.classList.add('checked');
             }
+            savePriorities();
             updateOverlap();
         }
 
@@ -893,14 +945,33 @@
             document.getElementById('licenseBadge').classList.toggle('show', total >= 5);
         }
 
-        function clearAll() {
+        function resetDefaults() {
+            // Reset priorities
             partyDefs.forEach(function(p) {
                 issues.forEach(function(iss) {
                     priorities[p.id][iss.id].clear();
                 });
             });
             document.querySelectorAll('.matrix-cell.checked').forEach(function(c) { c.classList.remove('checked'); });
+            savePriorities();
             updateOverlap();
+
+            // Reset proposal
+            proposal = Object.assign({}, DEFAULTS);
+            saveProposal();
+            updateProposalRow();
+
+            // Reset party stances
+            partyState = Object.assign({}, DEFAULT_PARTIES);
+            savePartyState();
+            document.querySelectorAll('.party-card').forEach(function(card) {
+                var pid = card.dataset.party;
+                var s = statuses[partyState[pid]];
+                var badge = card.querySelector('.party-badge');
+                badge.className = 'party-badge ' + s.cls;
+                badge.textContent = s.text;
+            });
+            updateSupport();
         }
 
         function emojiRain(emojis, count, duration) {
@@ -965,9 +1036,11 @@
         buildPartyCards();
         buildPips();
         updateProposalBadge();
+        updateOverlap();
+        updateSupport();
         renderRounds();
 
-        document.getElementById('clearBtn').addEventListener('click', clearAll);
+        document.getElementById('clearBtn').addEventListener('click', resetDefaults);
 
         document.getElementById('clearVotesBtn').addEventListener('click', function() {
             localStorage.removeItem('harborco_votes');
