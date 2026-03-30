@@ -335,6 +335,41 @@
             .issue-name { font-size: 16px; }
         }
 
+        /* ── MOBILE WIDTH ── */
+        @media (max-width: 900px) {
+            html, body { overflow: auto; height: auto; min-height: 100%; }
+            body { padding: 10px 12px; gap: 8px; }
+            .header { flex-wrap: wrap; height: auto; gap: 8px; }
+            .header-title { font-size: 20px; }
+            .tab-link { padding: 5px 12px; font-size: 12px; }
+            .issue-label-block { flex: 0 0 140px; }
+            .issue-name { font-size: 16px; }
+            .tile { font-size: 20px; padding: 6px; }
+            .parties-row { flex-wrap: wrap; }
+            .party-card { min-width: calc(33.33% - 6px); flex: 1 1 calc(33.33% - 6px); }
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 8px 8px; gap: 6px; }
+            .header { flex-direction: column; align-items: flex-start; height: auto; gap: 6px; }
+            .header-right { width: 100%; justify-content: flex-start; gap: 2px; flex-wrap: wrap; }
+            .header-title { font-size: 18px; letter-spacing: 0.5px; }
+            .tab-link { padding: 4px 10px; font-size: 11px; }
+            .issue-row { flex-direction: column; gap: 4px; }
+            .issue-label-block { flex: none; border-left: 3px solid var(--accent); padding: 4px 0 4px 10px; }
+            .issue-name { font-size: 14px; }
+            .tiles { flex-wrap: wrap; }
+            .tile { flex: 1 1 calc(50% - 4px); min-width: calc(50% - 4px); font-size: 14px; padding: 10px 6px; min-height: 44px; }
+            .bottom-panel { padding: 10px; }
+            .parties-row { flex-wrap: wrap; gap: 6px; }
+            .party-card { min-width: calc(50% - 4px); flex: 1 1 calc(50% - 4px); }
+            .party-name { font-size: 13px; }
+            .party-badge { font-size: 13px; padding: 5px 10px; }
+            .bottom-row { flex-wrap: wrap; gap: 10px; }
+            .bottom-row-spacer { display: none; }
+            .submit-btn { width: 100%; padding: 12px; font-size: 16px; }
+        }
+
         /* EMOJI RAIN */
         .emoji-rain {
             position: fixed;

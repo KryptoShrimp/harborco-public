@@ -7,305 +7,199 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         :root {
-            --bg: #0b0e14;
-            --card: #151a24;
-            --tile: #1a2030;
-            --tile-border: #242e40;
-            --accent: #22d3ee;
-            --accent-glow: rgba(34, 211, 238, 0.2);
-            --text: #e8edf5;
-            --text-dim: #5a6a82;
-            --green: #34d399;
-            --green-bg: rgba(52, 211, 153, 0.12);
-            --amber: #fbbf24;
-            --amber-bg: rgba(251, 191, 36, 0.12);
-            --red: #f87171;
-            --red-bg: rgba(248, 113, 113, 0.12);
+            --bg: #0b0e14; --card: #151a24; --tile: #1a2030; --tile-border: #242e40;
+            --accent: #22d3ee; --accent-glow: rgba(34,211,238,0.2);
+            --text: #e8edf5; --text-dim: #5a6a82;
+            --green: #34d399; --green-bg: rgba(52,211,153,0.12);
+            --amber: #fbbf24; --amber-bg: rgba(251,191,36,0.12);
+            --red: #f87171; --red-bg: rgba(248,113,113,0.12);
             --gray-badge: #242e40;
         }
-
         html.light {
-            --bg: #f4f5f7;
-            --card: #ffffff;
-            --tile: #e8eaed;
-            --tile-border: #d1d5db;
-            --accent: #0891b2;
-            --accent-glow: rgba(8, 145, 178, 0.15);
-            --text: #1a1a2e;
-            --text-dim: #6b7280;
-            --green: #059669;
-            --green-bg: rgba(5, 150, 105, 0.1);
-            --amber: #d97706;
-            --amber-bg: rgba(217, 119, 6, 0.1);
-            --red: #dc2626;
-            --red-bg: rgba(220, 38, 38, 0.08);
+            --bg: #f4f5f7; --card: #ffffff; --tile: #e8eaed; --tile-border: #d1d5db;
+            --accent: #0891b2; --accent-glow: rgba(8,145,178,0.15);
+            --text: #1a1a2e; --text-dim: #6b7280;
+            --green: #059669; --green-bg: rgba(5,150,105,0.1);
+            --amber: #d97706; --amber-bg: rgba(217,119,6,0.1);
+            --red: #dc2626; --red-bg: rgba(220,38,38,0.08);
             --gray-badge: #d1d5db;
         }
-
         html.light .deal-block { background: var(--accent); }
-        html.light .deal-value { color: #ffffff; }
-        html.light .deal-issue { color: rgba(255, 255, 255, 0.6); }
+        html.light .deal-value { color: #fff; }
+        html.light .deal-issue { color: rgba(255,255,255,0.6); }
+        html.light .insight-optimal { background: var(--accent); border-color: var(--accent); }
+        html.light .insight-optimal .io-val, html.light .insight-optimal .io-label { color: #fff; }
+        html.light .insight-optimal .insight-title, html.light .insight-optimal .io-label { color: rgba(255,255,255,0.5); }
 
-        html, body {
-            width: 100%; height: 100%;
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Outfit', sans-serif;
-        }
+        html { color-scheme: dark; }
+        html.light { color-scheme: light; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--tile-border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
 
-        body {
-            display: flex;
-            flex-direction: column;
-            padding: 16px 24px;
-            gap: 16px;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
-            height: 38px;
-        }
-
+        html, body { width: 100%; height: 100%; background: var(--bg); color: var(--text); font-family: 'Outfit', sans-serif; }
+        body { display: flex; flex-direction: column; padding: 16px 24px; gap: 14px; }
+        .header { display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; height: 38px; }
         .header-left { display: flex; align-items: center; gap: 14px; }
-
-        .logo-bar {
-            width: 6px; height: 30px;
-            background: var(--accent); border-radius: 2px;
-            box-shadow: 0 0 10px var(--accent-glow);
-        }
-
-        .header-title {
-            font-size: 28px; font-weight: 800;
-            letter-spacing: 1.5px; text-transform: uppercase;
-        }
-
+        .logo-bar { width: 6px; height: 30px; background: var(--accent); border-radius: 2px; box-shadow: 0 0 10px var(--accent-glow); }
+        .header-title { font-size: 28px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
         .header-title span { color: var(--accent); }
         .header-right { display: flex; align-items: center; gap: 4px; }
-
-        .tab-link {
-            padding: 6px 18px; border-radius: 6px;
-            font-size: 14px; font-weight: 600;
-            text-decoration: none; color: var(--text-dim);
-            transition: all 0.15s; letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
+        .tab-link { padding: 6px 18px; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none; color: var(--text-dim); transition: all 0.15s; letter-spacing: 0.5px; text-transform: uppercase; }
         .tab-link:hover { color: var(--text); background: var(--tile); }
-        .tab-link.active { color: var(--accent); background: rgba(34, 211, 238, 0.1); }
-
-        .theme-toggle {
-            width: 36px; height: 36px;
-            border-radius: 8px;
-            border: 1px solid var(--tile-border);
-            background: var(--tile);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            transition: all 0.15s;
-            margin-left: 8px;
-            flex-shrink: 0;
-        }
-
+        .tab-link.active { color: var(--accent); background: rgba(34,211,238,0.1); }
+        .theme-toggle { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--tile-border); background: var(--tile); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: all 0.15s; margin-left: 8px; flex-shrink: 0; }
         .theme-toggle:hover { border-color: var(--accent); }
 
-        /* ── CONTENT ── */
-        .content {
-            flex: 1;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            flex: 1;
-            gap: 12px;
-            color: var(--text-dim);
-        }
-
+        .content { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
+        .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; gap: 12px; color: var(--text-dim); }
         .empty-icon { font-size: 48px; opacity: 0.4; }
-        .empty-text { font-size: 16px; font-weight: 600; }
-        .empty-hint { font-size: 13px; }
+        .empty-text { font-size: 18px; font-weight: 600; }
+        .empty-hint { font-size: 14px; }
+
+        /* ── INSIGHTS DASHBOARD ── */
+        .insights-dashboard { display: flex; gap: 12px; flex-shrink: 0; align-items: stretch; }
+        .insights-col { flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+        .insight-box { background: var(--card); border: 1px solid var(--tile-border); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+        .chart-box { background: var(--card); border: 1px solid var(--tile-border); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+        .chart-canvas-wrap { flex: 1; position: relative; min-height: 0; }
+        .chart-canvas-wrap canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .chart-legend { display: flex; gap: 12px; flex-wrap: wrap; }
+        .chart-legend-item { display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: var(--text-dim); }
+        .chart-dot { width: 8px; height: 8px; border-radius: 50%; }
+        .pareto-list { display: flex; flex-direction: column; gap: 3px; overflow-y: auto; flex: 1; }
+        .pareto-item { font-size: 12px; font-weight: 600; color: var(--text); padding: 5px 10px; border-radius: 5px; background: var(--tile); display: flex; justify-content: space-between; gap: 6px; align-items: center; }
+        .pareto-item:first-child { background: rgba(34,211,238,0.08); border: 1px solid rgba(34,211,238,0.15); }
+        .pareto-rank { font-size: 10px; font-weight: 800; color: var(--text-dim); min-width: 18px; }
+        .pareto-code { color: var(--accent); font-weight: 700; letter-spacing: 0.5px; flex: 1; font-size: 11px; }
+        .pareto-pts { color: var(--text-dim); font-size: 10px; white-space: nowrap; }
+        .pareto-dimmed { opacity: 0.45; }
+        .pareto-no-data { font-size: 13px; color: var(--text-dim); }
+        .batna-note { font-size: 10px; color: var(--amber); font-weight: 600; }
+
+        .insight-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-dim); }
+        .insight-optimal { background: var(--accent); border-color: var(--accent); }
+        .insight-optimal .insight-title { color: rgba(11,14,20,0.4); }
+        .io-val { font-size: 32px; font-weight: 800; color: var(--bg); }
+        .io-label { font-size: 16px; font-weight: 700; color: rgba(11,14,20,0.5); margin-top: 2px; letter-spacing: 1px; }
+        .party-score-row { display: flex; gap: 6px; flex-wrap: wrap; }
+        .party-score-chip { padding: 6px 12px; border-radius: 6px; font-size: 14px; font-weight: 600; background: var(--tile); border: 1px solid var(--tile-border); display: flex; gap: 6px; align-items: center; }
+        .ps-name { color: var(--text-dim); }
+        .ps-val { color: var(--text); font-weight: 800; font-size: 16px; }
+        .low-score .ps-val { color: var(--red); }
+        .high-score .ps-val { color: var(--green); }
 
         /* ── ROUND CARD ── */
-        .round-card {
-            background: var(--card);
-            border: 1px solid var(--tile-border);
-            border-radius: 10px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
+        .round-card { background: var(--card); border: 1px solid var(--tile-border); border-radius: 10px; padding: 18px 22px; display: flex; flex-direction: column; gap: 14px; }
         .round-card.pass { border-left: 4px solid var(--green); }
         .round-card.ok { border-left: 4px solid var(--amber); }
         .round-card.fail { border-left: 4px solid var(--red); }
-
-        .round-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .round-num {
-            font-size: 28px; font-weight: 800;
-            color: var(--accent);
-            min-width: 80px;
-        }
-
-        .round-result {
-            font-size: 28px;
-        }
-
-        .round-support {
-            font-size: 16px; font-weight: 700;
-            margin-left: auto;
-        }
-
+        .round-header { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .round-num { font-size: 26px; font-weight: 800; color: var(--accent); }
+        .round-result { font-size: 26px; }
+        .round-pts { font-size: 18px; font-weight: 700; color: var(--accent); padding: 3px 12px; background: rgba(34,211,238,0.1); border-radius: 4px; }
+        .round-support { font-size: 16px; font-weight: 700; margin-left: auto; }
         .round-support.pass-text { color: var(--green); }
         .round-support.ok-text { color: var(--amber); }
         .round-support.fail-text { color: var(--red); }
+        .round-time { font-size: 13px; color: var(--text-dim); }
+        .deal-params { display: flex; gap: 6px; }
+        .deal-block { flex: 1; background: var(--accent); border-radius: 8px; padding: 10px 8px; text-align: center; display: flex; flex-direction: column; justify-content: center; gap: 3px; }
+        .deal-issue { font-size: 10px; font-weight: 700; color: rgba(11,14,20,0.5); text-transform: uppercase; letter-spacing: 1px; }
+        .deal-value { font-size: 15px; font-weight: 700; color: var(--bg); text-transform: uppercase; line-height: 1.2; }
+        .party-breakdown { display: flex; gap: 6px; }
+        .party-chip { flex: 1; border-radius: 6px; padding: 8px 10px; display: flex; flex-direction: column; gap: 3px; text-align: center; }
+        .party-chip.supports { background: var(--green-bg); border: 1px solid rgba(52,211,153,0.25); }
+        .party-chip.opposed { background: var(--red-bg); border: 1px solid rgba(248,113,113,0.25); }
+        .party-chip.undecided { background: var(--tile); border: 1px solid var(--tile-border); }
+        .chip-top { display: flex; justify-content: space-between; align-items: center; }
+        .chip-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .chip-name.supports { color: var(--green); } .chip-name.opposed { color: var(--red); } .chip-name.undecided { color: var(--text-dim); }
+        .chip-pts { font-size: 13px; font-weight: 800; color: var(--accent); }
+        .chip-status { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .chip-status.supports { color: var(--green); } .chip-status.opposed { color: var(--red); } .chip-status.undecided { color: var(--text-dim); }
 
-        .round-time {
-            font-size: 12px;
-            color: var(--text-dim);
-            margin-left: 12px;
-        }
+        /* ── ROUND INSIGHTS ── */
+        .round-insights { display: flex; flex-direction: column; gap: 8px; }
+        .round-insights-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-dim); }
+        .round-insight-optimal { font-size: 15px; font-weight: 700; color: var(--green); background: var(--green-bg); padding: 10px 16px; border-radius: 8px; border: 1px solid rgba(52,211,153,0.2); }
+        .suggestion-cards { display: flex; gap: 8px; flex-wrap: wrap; }
+        .suggestion-card { flex: 1; min-width: 280px; background: var(--tile); border: 1px solid var(--tile-border); border-radius: 8px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+        .suggestion-header { display: flex; justify-content: space-between; align-items: center; }
+        .suggestion-issue { font-size: 12px; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 0.5px; }
+        .suggestion-gain { font-size: 13px; font-weight: 800; color: var(--green); background: var(--green-bg); padding: 2px 8px; border-radius: 4px; }
+        .suggestion-swap { font-size: 14px; font-weight: 600; color: var(--accent); }
+        .suggestion-swap .sw-from { color: var(--text-dim); text-decoration: line-through; opacity: 0.7; }
+        .suggestion-swap .sw-arrow { color: var(--text-dim); margin: 0 6px; }
+        .suggestion-swap .sw-to { color: var(--accent); }
+        .suggestion-parties { display: flex; gap: 4px; flex-wrap: wrap; }
+        .sp-chip { padding: 2px 7px; border-radius: 3px; font-size: 11px; font-weight: 700; }
+        .sp-gain { background: var(--green-bg); color: var(--green); border: 1px solid rgba(52,211,153,0.2); }
+        .sp-loss { background: var(--red-bg); color: var(--red); border: 1px solid rgba(248,113,113,0.2); }
+        .sp-neutral { background: var(--card); color: var(--text-dim); border: 1px solid var(--tile-border); font-weight: 600; }
+        .suggestion-feasibility { font-size: 10px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.3px; }
 
-        /* ── DEAL PARAMETERS ── */
-        .deal-params {
-            display: flex;
-            gap: 6px;
-        }
-
-        .deal-block {
-            flex: 1;
-            background: var(--accent);
-            border-radius: 8px;
-            padding: 10px 8px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 3px;
-        }
-
-        .deal-issue {
-            font-size: 10px;
-            font-weight: 700;
-            color: rgba(11, 14, 20, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .deal-value {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--bg);
-            text-transform: uppercase;
-            line-height: 1.2;
-        }
-
-        /* ── PARTY BREAKDOWN ── */
-        .party-breakdown {
-            display: flex;
-            gap: 6px;
-        }
-
-        .party-chip {
-            flex: 1;
-            border-radius: 6px;
-            padding: 8px 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-            text-align: center;
-        }
-
-        .party-chip.supports {
-            background: var(--green-bg);
-            border: 1px solid rgba(52, 211, 153, 0.25);
-        }
-
-        .party-chip.opposed {
-            background: var(--red-bg);
-            border: 1px solid rgba(248, 113, 113, 0.25);
-        }
-
-        .party-chip.undecided {
-            background: var(--tile);
-            border: 1px solid var(--tile-border);
-        }
-
-        .chip-name {
-            font-size: 11px;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .chip-name.supports { color: var(--green); }
-        .chip-name.opposed { color: var(--red); }
-        .chip-name.undecided { color: var(--text-dim); }
-
-        .chip-status {
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .chip-status.supports { color: var(--green); }
-        .chip-status.opposed { color: var(--red); }
-        .chip-status.undecided { color: var(--text-dim); }
-
-        /* ── BOTTOM ── */
-        .bottom-bar {
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 0 0;
-        }
-
-        .round-count {
-            font-size: 13px; font-weight: 600;
-            color: var(--text-dim);
-            text-transform: uppercase; letter-spacing: 0.5px;
-        }
-
+        .bottom-bar { flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 6px 0 0; }
+        .round-count { font-size: 14px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
         .round-count span { color: var(--accent); font-weight: 800; }
-
-        .clear-btn {
-            padding: 8px 20px;
-            background: var(--tile); color: var(--text-dim);
-            border: 1px solid var(--tile-border);
-            border-radius: 6px;
-            font-size: 13px; font-weight: 600;
-            cursor: pointer; font-family: 'Outfit', sans-serif;
-            text-transform: uppercase; letter-spacing: 0.5px;
-            transition: all 0.15s;
-        }
-
+        .clear-btn { padding: 8px 20px; background: var(--tile); color: var(--text-dim); border: 1px solid var(--tile-border); border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: 'Outfit',sans-serif; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.15s; }
         .clear-btn:hover { border-color: var(--red); color: var(--red); }
 
-        @media (max-height: 900px) {
-            body { padding: 10px 18px; gap: 12px; }
-            .header { height: 32px; }
-            .header-title { font-size: 22px; }
-            .round-card { padding: 14px; gap: 10px; }
+        @media (max-width: 900px) {
+            .insights-dashboard { flex-direction: column; height: auto; }
+            .insights-col { min-height: auto; }
+            .chart-box { min-height: 240px; }
+            .round-card { padding: 14px 16px; gap: 10px; }
+            .round-num { font-size: 20px; }
+            .round-result { font-size: 20px; }
+            .round-pts { font-size: 15px; }
+            .suggestion-cards { flex-direction: column; }
+            .suggestion-card { min-width: 100%; }
+        }
+        @media (max-width: 600px) {
+            body { padding: 8px 8px; gap: 8px; }
+            .header { flex-direction: column; align-items: flex-start; height: auto; gap: 6px; }
+            .header-right { width: 100%; justify-content: flex-start; gap: 2px; flex-wrap: wrap; }
+            .header-title { font-size: 16px; letter-spacing: 0.5px; }
+            .tab-link { padding: 4px 10px; font-size: 11px; }
+            .theme-toggle { width: 30px; height: 30px; font-size: 14px; margin-left: 4px; }
+            .insights-dashboard { gap: 8px; }
+            .insight-box { padding: 10px 12px; }
+            .io-val { font-size: 24px; }
+            .io-label { font-size: 13px; }
+            .party-score-chip { padding: 4px 8px; font-size: 12px; }
+            .ps-val { font-size: 13px; }
+            .chart-box { min-height: 200px; padding: 10px 12px; }
+            .pareto-item { padding: 4px 8px; font-size: 11px; }
+            .pareto-code { font-size: 10px; }
+            .pareto-pts { font-size: 9px; }
+            .round-card { padding: 12px 12px; gap: 8px; }
+            .round-header { gap: 8px; }
+            .round-num { font-size: 18px; }
+            .round-result { font-size: 18px; }
+            .round-pts { font-size: 13px; padding: 2px 8px; }
+            .round-support { font-size: 13px; }
+            .round-time { font-size: 10px; }
+            .deal-params { flex-wrap: wrap; gap: 4px; }
+            .deal-block { min-width: calc(50% - 3px); flex: 1 1 calc(50% - 3px); padding: 6px 4px; }
+            .deal-issue { font-size: 8px; }
+            .deal-value { font-size: 12px; }
+            .party-breakdown { flex-wrap: wrap; gap: 4px; }
+            .party-chip { min-width: calc(33% - 3px); flex: 1 1 calc(33% - 3px); padding: 5px 6px; }
+            .chip-name { font-size: 10px; }
+            .chip-pts { font-size: 11px; }
+            .chip-status { font-size: 8px; }
+            .suggestion-card { min-width: 100%; padding: 10px 12px; }
+            .suggestion-issue { font-size: 11px; }
+            .suggestion-gain { font-size: 11px; }
+            .suggestion-swap { font-size: 12px; }
+            .sp-chip { font-size: 10px; padding: 2px 5px; }
+            .suggestion-feasibility { font-size: 9px; }
+            .round-insights-title { font-size: 10px; }
+            .bottom-bar { padding: 4px 0 0; }
+            .clear-btn { padding: 6px 14px; font-size: 12px; }
         }
     </style>
 </head>
@@ -330,21 +224,14 @@
     </div>
 
     <script>
-        // ── THEME TOGGLE ──
         var savedTheme = localStorage.getItem('harborco_theme') || 'dark';
         if (savedTheme === 'light') document.documentElement.classList.add('light');
-
         var toggleBtn = document.getElementById('themeToggle');
-        function updateToggleIcon() {
-            var isLight = document.documentElement.classList.contains('light');
-            toggleBtn.textContent = isLight ? '\u2600\uFE0F' : '\uD83C\uDF19';
-        }
+        function updateToggleIcon() { toggleBtn.textContent = document.documentElement.classList.contains('light') ? '\u2600\uFE0F' : '\uD83C\uDF19'; }
         updateToggleIcon();
-
         toggleBtn.addEventListener('click', function() {
             document.documentElement.classList.toggle('light');
-            var isLight = document.documentElement.classList.contains('light');
-            localStorage.setItem('harborco_theme', isLight ? 'light' : 'dark');
+            localStorage.setItem('harborco_theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
             updateToggleIcon();
         });
 
@@ -355,7 +242,6 @@
             { id: 'D', name: 'Federal Loan', options: ['$3B', '$2B', '$1B', 'No Loan'] },
             { id: 'E', name: 'Port Compensation', options: ['$600M', '$450M', '$300M', '$150M', 'None'] },
         ];
-
         var partyDefs = [
             { id: 'env', name: 'Env. League' },
             { id: 'unions', name: 'Labor Unions' },
@@ -364,58 +250,438 @@
             { id: 'gov', name: 'Gov. Sherwood' },
             { id: 'harborco', name: 'Harborco' },
         ];
-
         var statusNames = ['Undecided', 'Supports', 'Opposed'];
         var statusClasses = ['undecided', 'supports', 'opposed'];
 
-        function mk(tag, cls, text) {
-            var e = document.createElement(tag);
-            if (cls) e.className = cls;
-            if (text) e.textContent = text;
-            return e;
+        function mk(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; }
+        function loadVotes() { try { return JSON.parse(localStorage.getItem('harborco_votes')) || []; } catch(e) { return []; } }
+        function loadScores() { try { var s = JSON.parse(localStorage.getItem('harborco_scores')); if (s && typeof s === 'object') return s; } catch(e) {} return null; }
+        var roundColors = ['#f87171', '#fbbf24', '#34d399', '#a78bfa', '#f472b6', '#fb923c', '#38bdf8', '#4ade80', '#e879f9', '#facc15'];
+        function gs(scores, pid, iid, oi) { return (scores && scores[pid] && scores[pid][iid] && scores[pid][iid][oi]) || 0; }
+
+        // Soft filter: exclude deals where any party gets < 25% of their max possible
+        function partyMaxPossible(scores, pid) {
+            var total = 0;
+            issues.forEach(function(iss) {
+                var best = 0;
+                iss.options.forEach(function(_, oi) { var v = gs(scores, pid, iss.id, oi); if (v > best) best = v; });
+                total += best;
+            });
+            return total;
         }
 
-        function loadVotes() {
-            try { return JSON.parse(localStorage.getItem('harborco_votes')) || []; }
-            catch(e) { return []; }
+        function isFeasible(scores, combo) {
+            var prop = {}; issues.forEach(function(iss, idx) { prop[iss.id] = combo[idx]; });
+            return partyDefs.every(function(p) {
+                var maxP = partyMaxPossible(scores, p.id);
+                if (maxP === 0) return true;
+                var score = pScore(scores, p.id, prop);
+                return score >= maxP * 0.25;
+            });
         }
 
-        function roundEmoji(support) {
-            var others = support - 1;
-            if (others >= 5) return '\uD83E\uDD73';
-            if (others === 4) return '\uD83D\uDE0A';
-            return '\uD83D\uDC80';
+        function roundEmoji(support) { var o = support - 1; if (o >= 5) return '\uD83E\uDD73'; if (o === 4) return '\uD83D\uDE0A'; return '\uD83D\uDC80'; }
+        function resultClass(support) { var o = support - 1; if (o >= 5) return 'pass'; if (o === 4) return 'ok'; return 'fail'; }
+        function resultLabel(support) { var o = support - 1; if (o >= 5) return 'License Approved'; if (o === 4) return '4/5 Support'; return o + '/5 Support'; }
+        function formatTime(ts) { try { var d = new Date(ts); return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ', ' + d.toLocaleDateString([], { month: 'short', day: 'numeric' }); } catch(e) { return ''; } }
+
+        function computeOptimal(scores) {
+            var deal = {}, total = 0;
+            issues.forEach(function(iss) {
+                var best = 0, bestS = -1;
+                iss.options.forEach(function(_, oi) { var s = 0; partyDefs.forEach(function(p) { s += gs(scores, p.id, iss.id, oi); }); if (s > bestS) { bestS = s; best = oi; } });
+                deal[iss.id] = best; total += bestS;
+            });
+            return { deal: deal, total: total };
+        }
+        function propTotal(scores, prop) { var t = 0; partyDefs.forEach(function(p) { issues.forEach(function(iss) { t += gs(scores, p.id, iss.id, prop[iss.id] || 0); }); }); return t; }
+        function pScore(scores, pid, prop) { var t = 0; issues.forEach(function(iss) { t += gs(scores, pid, iss.id, prop[iss.id] || 0); }); return t; }
+
+        function allCombos(scores) {
+            var combos = [[]];
+            issues.forEach(function(iss) { var n = []; combos.forEach(function(c) { for (var o = 0; o < iss.options.length; o++) n.push(c.concat([o])); }); combos = n; });
+            return combos.map(function(combo) {
+                var prop = {}; issues.forEach(function(iss, idx) { prop[iss.id] = combo[idx]; });
+                var sc = partyDefs.map(function(p) { return pScore(scores, p.id, prop); });
+                return { combo: combo, prop: prop, scores: sc, total: sc.reduce(function(a, b) { return a + b; }, 0), min: Math.min.apply(null, sc) };
+            });
         }
 
-        function resultClass(support) {
-            var others = support - 1;
-            if (others >= 5) return 'pass';
-            if (others === 4) return 'ok';
-            return 'fail';
+
+
+        // ── DRAW CHART ──
+        // Pareto bar chart: normalized party satisfaction for the best feasible deal
+        // Bars = each party's score as % of their max, sorted descending
+        // Cumulative line shows value concentration
+        function drawChart(canvas, feasible, votes, scores) {
+            var dpr = window.devicePixelRatio || 1;
+            var rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            var ctx = canvas.getContext('2d');
+            ctx.scale(dpr, dpr);
+            var W = rect.width, H = rect.height;
+            var pad = { top: 14, right: 36, bottom: 40, left: 36 };
+
+            var isLight = document.documentElement.classList.contains('light');
+            var textColor = isLight ? '#6b7280' : '#5a6a82';
+            var axisColor = isLight ? '#d1d5db' : '#242e40';
+            var barColor = isLight ? '#0891b2' : '#22d3ee';
+            var lineColor = isLight ? '#d97706' : '#fbbf24';
+            var threshColor = isLight ? 'rgba(220,38,38,0.4)' : 'rgba(248,113,113,0.4)';
+
+            // Get the deal to chart — best feasible, or latest round if available
+            var chartDeal = null;
+            if (votes && votes.length > 0) {
+                chartDeal = votes[votes.length - 1].proposal;
+            } else if (feasible.length > 0) {
+                chartDeal = {};
+                issues.forEach(function(iss, i) { chartDeal[iss.id] = feasible[0].combo[i]; });
+            }
+            if (!chartDeal) return;
+
+            // Compute normalized scores
+            var data = partyDefs.map(function(p) {
+                var maxP = partyMaxPossible(scores, p.id);
+                var curP = pScore(scores, p.id, chartDeal);
+                var pct = maxP > 0 ? (curP / maxP * 100) : 0;
+                return { name: p.name.split(' ')[0], pct: Math.round(pct), raw: curP, max: maxP };
+            });
+            data.sort(function(a, b) { return b.pct - a.pct; });
+
+            var n = data.length;
+            var chartW = W - pad.left - pad.right;
+            var chartH = H - pad.top - pad.bottom;
+            var barW = Math.min(chartW / n * 0.65, 50);
+            var gap = (chartW - barW * n) / (n + 1);
+
+            // Y axis (0-100%)
+            ctx.strokeStyle = axisColor;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(pad.left, pad.top);
+            ctx.lineTo(pad.left, H - pad.bottom);
+            ctx.lineTo(W - pad.right, H - pad.bottom);
+            ctx.stroke();
+
+            // Y gridlines + labels
+            ctx.fillStyle = textColor;
+            ctx.font = '600 9px Outfit';
+            ctx.textAlign = 'right';
+            for (var g = 0; g <= 4; g++) {
+                var yVal = g * 25;
+                var yPos = H - pad.bottom - (yVal / 100) * chartH;
+                ctx.strokeStyle = axisColor;
+                ctx.beginPath(); ctx.moveTo(pad.left, yPos); ctx.lineTo(W - pad.right, yPos); ctx.stroke();
+                ctx.fillStyle = textColor;
+                ctx.fillText(yVal + '%', pad.left - 4, yPos + 3);
+            }
+
+            // 25% threshold line (soft filter)
+            var threshY = H - pad.bottom - (25 / 100) * chartH;
+            ctx.strokeStyle = threshColor;
+            ctx.lineWidth = 1.5;
+            ctx.setLineDash([4, 3]);
+            ctx.beginPath(); ctx.moveTo(pad.left, threshY); ctx.lineTo(W - pad.right, threshY); ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Bars
+            var cumTotal = data.reduce(function(s, d) { return s + d.pct; }, 0);
+            var cumSum = 0;
+            var cumPoints = [];
+
+            data.forEach(function(d, i) {
+                var x = pad.left + gap + i * (barW + gap);
+                var barH = (d.pct / 100) * chartH;
+                var y = H - pad.bottom - barH;
+
+                // Bar
+                ctx.fillStyle = d.pct < 25 ? (isLight ? '#dc2626' : '#f87171') : barColor;
+                ctx.beginPath();
+                ctx.roundRect ? ctx.roundRect(x, y, barW, barH, [3, 3, 0, 0]) : ctx.rect(x, y, barW, barH);
+                ctx.fill();
+
+                // Value label on bar
+                ctx.fillStyle = isLight ? '#1a1a2e' : '#e8edf5';
+                ctx.font = '700 11px Outfit';
+                ctx.textAlign = 'center';
+                ctx.fillText(d.pct + '%', x + barW / 2, y - 4);
+
+                // Party name below
+                ctx.fillStyle = textColor;
+                ctx.font = '600 9px Outfit';
+                ctx.fillText(d.name, x + barW / 2, H - pad.bottom + 12);
+                ctx.fillText(d.raw + '/' + d.max, x + barW / 2, H - pad.bottom + 22);
+
+                // Cumulative point
+                cumSum += d.pct;
+                var cumPct = cumTotal > 0 ? (cumSum / cumTotal * 100) : 0;
+                cumPoints.push({ x: x + barW / 2, y: pad.top + (1 - cumPct / 100) * chartH });
+            });
+
+            // Cumulative line (right Y axis = 0-100% of total)
+            if (cumPoints.length > 1) {
+                ctx.strokeStyle = lineColor;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(cumPoints[0].x, cumPoints[0].y);
+                for (var ci = 1; ci < cumPoints.length; ci++) {
+                    ctx.lineTo(cumPoints[ci].x, cumPoints[ci].y);
+                }
+                ctx.stroke();
+
+                // Dots on cumulative line
+                ctx.fillStyle = lineColor;
+                cumPoints.forEach(function(cp) {
+                    ctx.beginPath(); ctx.arc(cp.x, cp.y, 3, 0, Math.PI * 2); ctx.fill();
+                });
+            }
+
+            // Right Y axis label
+            ctx.fillStyle = lineColor;
+            ctx.font = '600 9px Outfit';
+            ctx.textAlign = 'left';
+            ctx.fillText('Cumul.', W - pad.right + 4, pad.top + 4);
+            ctx.fillText('100%', W - pad.right + 4, pad.top + 14);
         }
 
-        function resultLabel(support) {
-            var others = support - 1;
-            if (others >= 5) return 'License Approved';
-            if (others === 4) return '4/5 Support';
-            return others + '/5 Support';
+        // ── BUILD DASHBOARD ──
+        function buildDashboard(scores, votes) {
+            var dash = mk('div', 'insights-dashboard');
+            var opt = computeOptimal(scores);
+
+            var allScored = allCombos(scores);
+            var feasible = allScored.filter(function(d) { return isFeasible(scores, d.combo); });
+            feasible.sort(function(a, b) { return b.total - a.total; });
+
+            // Col 1: Max possible score
+            var col1 = mk('div', 'insights-col');
+            col1.style.flex = '0 0 320px';
+            var optBox = mk('div', 'insight-box insight-optimal');
+            optBox.appendChild(mk('div', 'insight-title', 'Max Possible Score'));
+            optBox.appendChild(mk('div', 'io-val', opt.total + ' pts'));
+            optBox.appendChild(mk('div', 'io-label', 'across all 720 combinations'));
+            col1.appendChild(optBox);
+
+            var psBox = mk('div', 'insight-box');
+            psBox.appendChild(mk('div', 'insight-title', 'Party Scores (Best Feasible)'));
+            var psRow = mk('div', 'party-score-row');
+            var bestDeal = feasible.length > 0 ? (function() { var d = {}; issues.forEach(function(iss, i) { d[iss.id] = feasible[0].combo[i]; }); return d; })() : opt.deal;
+            var totals = partyDefs.map(function(p) { return { name: p.name.split(' ')[0], total: pScore(scores, p.id, bestDeal) }; });
+            var avg = totals.reduce(function(s, t) { return s + t.total; }, 0) / totals.length;
+            totals.forEach(function(pt) {
+                var cls = 'party-score-chip';
+                if (avg > 0 && pt.total < avg * 0.7) cls += ' low-score';
+                else if (avg > 0 && pt.total > avg * 1.3) cls += ' high-score';
+                var chip = mk('div', cls);
+                chip.appendChild(mk('span', 'ps-name', pt.name));
+                chip.appendChild(mk('span', 'ps-val', String(pt.total)));
+                psRow.appendChild(chip);
+            });
+            psBox.appendChild(psRow);
+            col1.appendChild(psBox);
+            dash.appendChild(col1);
+
+            // Col 2: Chart
+            var col2 = mk('div', 'insights-col');
+            var chartBox = mk('div', 'chart-box');
+            var chartSrc = '';
+            if (votes.length > 0) chartSrc = 'Latest Round (R' + votes.length + ')';
+            else if (feasible.length > 0) chartSrc = 'Best Feasible Deal';
+            var isLight = document.documentElement.classList.contains('light');
+            chartBox.appendChild(mk('div', 'insight-title', 'How Satisfied Is Each Party? \u2014 ' + chartSrc));
+            var subtitle = mk('div', 'batna-note');
+            subtitle.textContent = 'Each bar = % of their max possible score. Higher = happier with the deal.';
+            subtitle.style.marginBottom = '4px';
+            chartBox.appendChild(subtitle);
+            var wrap = mk('div', 'chart-canvas-wrap');
+            var canvas = document.createElement('canvas');
+            wrap.appendChild(canvas);
+            chartBox.appendChild(wrap);
+            var legend = mk('div', 'chart-legend');
+            var items = [
+                [isLight ? '#0891b2' : '#22d3ee', 'Party satisfaction'],
+                [isLight ? '#dc2626' : '#f87171', 'Below 25% (at risk)'],
+                [isLight ? '#d97706' : '#fbbf24', 'Cumulative value']
+            ];
+            items.forEach(function(it) {
+                var li = mk('div', 'chart-legend-item');
+                var dot = mk('div', 'chart-dot'); dot.style.background = it[0]; li.appendChild(dot);
+                li.appendChild(document.createTextNode(it[1])); legend.appendChild(li);
+            });
+            chartBox.appendChild(legend);
+            col2.appendChild(chartBox);
+            dash.appendChild(col2);
+
+            // Col 3: Top 10 feasible deals
+            var col3 = mk('div', 'insights-col');
+            var listBox = mk('div', 'insight-box');
+            listBox.appendChild(mk('div', 'insight-title', 'Top 10 Feasible Deals'));
+            listBox.appendChild(mk('div', 'batna-note', 'Excludes deals where any party gets < 25% of their best possible'));
+
+            var paretoList = mk('div', 'pareto-list');
+            var topDeals = feasible.slice(0, 10);
+            if (topDeals.length === 0) {
+                paretoList.appendChild(mk('div', 'pareto-no-data', 'No feasible deals found'));
+            } else {
+                var maxPts = topDeals[0].total;
+                topDeals.forEach(function(deal, idx) {
+                    var code = issues.map(function(iss, i) { return iss.id + (deal.combo[i] + 1); }).join(' ');
+                    var isTop = deal.total === maxPts;
+                    var item = mk('div', 'pareto-item' + (isTop ? '' : ' pareto-dimmed'));
+                    item.appendChild(mk('span', 'pareto-rank', '#' + (idx + 1)));
+                    item.appendChild(mk('span', 'pareto-code', code));
+                    item.appendChild(mk('span', 'pareto-pts', deal.total + ' pts (' + deal.scores.join(', ') + ')'));
+                    paretoList.appendChild(item);
+                });
+            }
+            listBox.appendChild(paretoList);
+            col3.appendChild(listBox);
+            dash.appendChild(col3);
+
+            setTimeout(function() {
+                drawChart(canvas, feasible, votes, scores);
+                window.addEventListener('resize', function() { drawChart(canvas, feasible, votes, scores); });
+            }, 0);
+
+            return dash;
         }
 
-        function formatTime(ts) {
-            try {
-                var d = new Date(ts);
-                return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) +
-                       ', ' + d.toLocaleDateString([], { month: 'short', day: 'numeric' });
-            } catch (e) { return ''; }
+        function buildRoundInsights(scores, proposal) {
+            var section = mk('div', 'round-insights');
+            section.appendChild(mk('div', 'round-insights-title', 'Possible Improvements'));
+
+            // Current satisfaction context
+            var partyMaxes = {};
+            var satData = partyDefs.map(function(p) {
+                var maxP = partyMaxPossible(scores, p.id);
+                partyMaxes[p.id] = maxP;
+                var curP = pScore(scores, p.id, proposal);
+                var pct = maxP > 0 ? (curP / maxP * 100) : 0;
+                return { id: p.id, name: p.name.split(' ')[0], pct: pct };
+            });
+            var avgSat = satData.reduce(function(s, d) { return s + d.pct; }, 0) / satData.length;
+            var lowest = satData.slice().sort(function(a, b) { return a.pct - b.pct; })[0];
+
+            var context = mk('div', 'suggestion-feasibility');
+            context.style.marginBottom = '6px';
+            context.textContent = 'Current avg satisfaction: ' + Math.round(avgSat) + '% | Lowest: ' + lowest.name + ' at ' + Math.round(lowest.pct) + '%';
+            section.appendChild(context);
+
+            var currentTotal = propTotal(scores, proposal);
+            var opt = computeOptimal(scores);
+
+            if (currentTotal === opt.total) {
+                section.appendChild(mk('div', 'round-insight-optimal', '\u2713 This deal maximizes total value (' + currentTotal + ' pts)'));
+                return section;
+            }
+
+            // Evaluate ALL alternative option swaps with normalized scoring
+            var improvements = [];
+            issues.forEach(function(iss) {
+                var cur = proposal[iss.id] || 0;
+                iss.options.forEach(function(_, oi) {
+                    if (oi === cur) return;
+                    var impacts = [];
+                    var normGains = [];
+                    var worstNormLoss = 0;
+                    var worstLoserName = '';
+
+                    partyDefs.forEach(function(p) {
+                        var maxP = partyMaxes[p.id] || 1;
+                        var curV = gs(scores, p.id, iss.id, cur);
+                        var newV = gs(scores, p.id, iss.id, oi);
+                        var rawDiff = newV - curV;
+                        var normDiff = (rawDiff / maxP) * 100;
+
+                        impacts.push({ name: p.name.split(' ')[0], normDiff: normDiff });
+
+                        if (normDiff > 0) normGains.push(normDiff);
+                        if (normDiff < worstNormLoss) {
+                            worstNormLoss = normDiff;
+                            worstLoserName = p.name.split(' ')[0];
+                        }
+                    });
+
+                    var avgNormGain = normGains.length > 0 ? normGains.reduce(function(s, v) { return s + v; }, 0) / normGains.length : 0;
+                    if (avgNormGain <= 0) return;
+
+                    // Feasibility: high avg gain with low worst loss = good
+                    var feasibility = avgNormGain - Math.abs(worstNormLoss);
+
+                    improvements.push({
+                        issue: iss.name, from: iss.options[cur], to: iss.options[oi],
+                        avgGain: avgNormGain, feasibility: feasibility,
+                        impacts: impacts, worstLoss: worstNormLoss, worstLoser: worstLoserName
+                    });
+                });
+            });
+
+            // Sort: feasible first (high avg gain, low worst loss)
+            improvements.sort(function(a, b) {
+                if (Math.abs(b.feasibility - a.feasibility) > 0.5) return b.feasibility - a.feasibility;
+                return b.avgGain - a.avgGain;
+            });
+
+            var cards = mk('div', 'suggestion-cards');
+            improvements.slice(0, 3).forEach(function(imp) {
+                var card = mk('div', 'suggestion-card');
+
+                // Header: issue + avg gain badge
+                var header = mk('div', 'suggestion-header');
+                header.appendChild(mk('span', 'suggestion-issue', imp.issue));
+                header.appendChild(mk('span', 'suggestion-gain', '+' + imp.avgGain.toFixed(1) + '% avg'));
+                card.appendChild(header);
+
+                // Swap: current → proposed
+                var swap = mk('div', 'suggestion-swap');
+                swap.appendChild(mk('span', 'sw-from', imp.from));
+                swap.appendChild(mk('span', 'sw-arrow', '\u2192'));
+                swap.appendChild(mk('span', 'sw-to', imp.to));
+                card.appendChild(swap);
+
+                // Party impacts as normalized %
+                var parties = mk('div', 'suggestion-parties');
+                // Sort: gains first, then losses
+                var sorted = imp.impacts.slice().sort(function(a, b) { return b.normDiff - a.normDiff; });
+                sorted.forEach(function(p) {
+                    var cls, label;
+                    if (p.normDiff > 0.5) { cls = 'sp-chip sp-gain'; label = p.name + ' +' + p.normDiff.toFixed(1) + '%'; }
+                    else if (p.normDiff < -0.5) { cls = 'sp-chip sp-loss'; label = p.name + ' ' + p.normDiff.toFixed(1) + '%'; }
+                    else { cls = 'sp-chip sp-neutral'; label = p.name + ' 0%'; }
+                    parties.appendChild(mk('span', cls, label));
+                });
+                card.appendChild(parties);
+
+                // Feasibility note
+                if (Math.abs(imp.worstLoss) < 0.5) {
+                    card.appendChild(mk('div', 'suggestion-feasibility', '\u2713 No party loses satisfaction \u2014 easy win'));
+                } else if (Math.abs(imp.worstLoss) < 5) {
+                    card.appendChild(mk('div', 'suggestion-feasibility', 'Minor tradeoff \u2014 ' + imp.worstLoser + ' loses ' + Math.abs(imp.worstLoss).toFixed(1) + '%'));
+                } else {
+                    card.appendChild(mk('div', 'suggestion-feasibility', 'Significant \u2014 ' + imp.worstLoser + ' loses ' + Math.abs(imp.worstLoss).toFixed(1) + '% satisfaction'));
+                }
+
+                cards.appendChild(card);
+            });
+            section.appendChild(cards);
+
+            if (improvements.length === 0) {
+                section.appendChild(mk('div', 'round-insight-optimal', 'No positive-sum trades available from this position.'));
+            }
+            return section;
         }
 
         function render() {
             var votes = loadVotes();
+            var scores = loadScores();
             var content = document.getElementById('content');
             while (content.firstChild) content.removeChild(content.firstChild);
             document.getElementById('roundCount').textContent = votes.length;
 
-            if (votes.length === 0) {
+            if (scores) content.appendChild(buildDashboard(scores, votes));
+
+            if (votes.length === 0 && !scores) {
                 var empty = mk('div', 'empty-state');
                 empty.appendChild(mk('div', 'empty-icon', '\uD83D\uDDF3\uFE0F'));
                 empty.appendChild(mk('div', 'empty-text', 'No votes recorded yet'));
@@ -424,54 +690,47 @@
                 return;
             }
 
-            // Newest first
             for (var i = votes.length - 1; i >= 0; i--) {
                 var v = votes[i];
                 var cls = resultClass(v.support);
                 var card = mk('div', 'round-card ' + cls);
-
-                // Header row: round number, emoji, result, time
                 var header = mk('div', 'round-header');
                 header.appendChild(mk('div', 'round-num', 'Round ' + v.round));
                 header.appendChild(mk('div', 'round-result', roundEmoji(v.support)));
-                var supEl = mk('div', 'round-support ' + cls + '-text', resultLabel(v.support));
-                header.appendChild(supEl);
+                if (scores) header.appendChild(mk('div', 'round-pts', propTotal(scores, v.proposal) + ' pts'));
+                header.appendChild(mk('div', 'round-support ' + cls + '-text', resultLabel(v.support)));
                 header.appendChild(mk('div', 'round-time', formatTime(v.timestamp)));
                 card.appendChild(header);
 
-                // Deal parameters
                 var params = mk('div', 'deal-params');
                 issues.forEach(function(iss) {
                     var block = mk('div', 'deal-block');
                     block.appendChild(mk('div', 'deal-issue', iss.name));
-                    var optIdx = v.proposal[iss.id] || 0;
-                    block.appendChild(mk('div', 'deal-value', iss.options[optIdx]));
+                    block.appendChild(mk('div', 'deal-value', iss.options[v.proposal[iss.id] || 0]));
                     params.appendChild(block);
                 });
                 card.appendChild(params);
 
-                // Party breakdown
                 var breakdown = mk('div', 'party-breakdown');
                 partyDefs.forEach(function(p) {
                     var status = v.parties[p.id] || 0;
                     var scls = statusClasses[status];
                     var chip = mk('div', 'party-chip ' + scls);
-                    chip.appendChild(mk('div', 'chip-name ' + scls, p.name));
+                    var topRow = mk('div', 'chip-top');
+                    topRow.appendChild(mk('span', 'chip-name ' + scls, p.name));
+                    if (scores) topRow.appendChild(mk('span', 'chip-pts', pScore(scores, p.id, v.proposal) + ' pts'));
+                    chip.appendChild(topRow);
                     chip.appendChild(mk('div', 'chip-status ' + scls, statusNames[status]));
                     breakdown.appendChild(chip);
                 });
                 card.appendChild(breakdown);
-
+                if (scores) card.appendChild(buildRoundInsights(scores, v.proposal));
                 content.appendChild(card);
             }
         }
 
         render();
-
-        document.getElementById('clearBtn').addEventListener('click', function() {
-            localStorage.removeItem('harborco_votes');
-            render();
-        });
+        document.getElementById('clearBtn').addEventListener('click', function() { localStorage.removeItem('harborco_votes'); render(); });
     </script>
 </body>
 </html>

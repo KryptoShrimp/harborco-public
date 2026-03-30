@@ -29,558 +29,181 @@
         }
 
         html.light {
-            --bg: #f4f5f7;
-            --card: #ffffff;
-            --tile: #e8eaed;
-            --tile-border: #d1d5db;
-            --tile-hover: #dde0e4;
-            --accent: #0891b2;
-            --accent-glow: rgba(8, 145, 178, 0.15);
-            --accent-dark: #065f73;
-            --text: #1a1a2e;
-            --text-dim: #6b7280;
-            --green: #059669;
-            --green-bg: rgba(5, 150, 105, 0.1);
-            --amber: #d97706;
-            --amber-bg: rgba(217, 119, 6, 0.1);
-            --red: #dc2626;
-            --red-bg: rgba(220, 38, 38, 0.08);
+            --bg: #f4f5f7; --card: #ffffff; --tile: #e8eaed;
+            --tile-border: #d1d5db; --tile-hover: #dde0e4;
+            --accent: #0891b2; --accent-glow: rgba(8,145,178,0.15); --accent-dark: #065f73;
+            --text: #1a1a2e; --text-dim: #6b7280;
+            --green: #059669; --green-bg: rgba(5,150,105,0.1);
+            --amber: #d97706; --amber-bg: rgba(217,119,6,0.1);
+            --red: #dc2626; --red-bg: rgba(220,38,38,0.08);
             --gray-badge: #d1d5db;
         }
-
-        html.light .proposal-display-cell {
-            background: var(--accent);
-        }
-
-        html.light .proposal-display-cell span {
-            color: #ffffff;
-        }
-
-        html.light .deal-block {
-            background: var(--accent);
-        }
-
-        html.light .deal-value,
-        html.light .deal-issue {
-            color: #ffffff;
-        }
-
-        html.light .deal-issue {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        html.light .submit-btn {
-            color: #ffffff;
-        }
-
-        html.light .proposal-cell.active {
-            background: rgba(8, 145, 178, 0.15);
-        }
-
-        html.light .tile.selected,
-        html.light .matrix-cell.checked::after {
-            color: var(--green);
-        }
+        html.light .proposal-display-cell { background: var(--accent); }
+        html.light .proposal-display-cell span { color: #fff; }
+        html.light .submit-btn { color: #fff; }
+        html.light .proposal-cell.active { background: rgba(8,145,178,0.15); }
+        html { color-scheme: dark; }
+        html.light { color-scheme: light; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--tile-border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
 
         html, body {
-            width: 100%; height: 100%;
-            background: var(--bg);
-            color: var(--text);
+            width: 100%; min-height: 100%;
+            background: var(--bg); color: var(--text);
             font-family: 'Outfit', sans-serif;
-            overflow: hidden;
         }
-
-        body {
-            display: flex;
-            flex-direction: column;
-            padding: 16px 24px;
-            gap: 12px;
-        }
+        body { display: flex; flex-direction: column; padding: 12px 16px; gap: 8px; }
 
         /* ── HEADER ── */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
-            height: 38px;
-        }
-
+        .header { display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; height: 38px; }
         .header-left { display: flex; align-items: center; gap: 14px; }
-
-        .logo-bar {
-            width: 6px; height: 30px;
-            background: var(--accent);
-            border-radius: 2px;
-            box-shadow: 0 0 10px var(--accent-glow);
-        }
-
-        .header-title {
-            font-size: 28px; font-weight: 800;
-            letter-spacing: 1.5px; text-transform: uppercase;
-        }
-
+        .logo-bar { width: 6px; height: 30px; background: var(--accent); border-radius: 2px; box-shadow: 0 0 10px var(--accent-glow); }
+        .header-title { font-size: 28px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
         .header-title span { color: var(--accent); }
         .header-right { display: flex; align-items: center; gap: 4px; }
-
-        .tab-link {
-            padding: 6px 18px; border-radius: 6px;
-            font-size: 14px; font-weight: 600;
-            text-decoration: none; color: var(--text-dim);
-            transition: all 0.15s; letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
+        .tab-link { padding: 6px 18px; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none; color: var(--text-dim); transition: all 0.15s; letter-spacing: 0.5px; text-transform: uppercase; }
         .tab-link:hover { color: var(--text); background: var(--tile); }
-        .tab-link.active { color: var(--accent); background: rgba(34, 211, 238, 0.1); }
-
-        .theme-toggle {
-            width: 36px; height: 36px;
-            border-radius: 8px;
-            border: 1px solid var(--tile-border);
-            background: var(--tile);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            transition: all 0.15s;
-            margin-left: 8px;
-            flex-shrink: 0;
-        }
-
-        .theme-toggle:hover {
-            border-color: var(--accent);
-        }
+        .tab-link.active { color: var(--accent); background: rgba(34,211,238,0.1); }
+        .theme-toggle { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--tile-border); background: var(--tile); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: all 0.15s; margin-left: 8px; flex-shrink: 0; }
+        .theme-toggle:hover { border-color: var(--accent); }
 
         /* ── MATRIX ── */
-        .matrix-wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-            overflow: auto;
-        }
-
-        .matrix {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 4px;
-        }
-
+        .matrix-wrapper { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: auto; -webkit-overflow-scrolling: touch; }
+        .matrix { width: 100%; border-collapse: separate; border-spacing: 3px; table-layout: auto; }
         .matrix th, .matrix td { text-align: center; vertical-align: middle; }
+        .issue-group-header { background: var(--card); color: var(--accent); font-size: clamp(10px, 1.3vw, 14px); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 8px 4px; border-radius: 6px 6px 0 0; border-bottom: 2px solid var(--accent); }
+        .option-header { background: var(--card); color: var(--text-dim); font-size: clamp(8px, 1vw, 11px); font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; padding: 6px 2px; line-height: 1.3; border-radius: 0 0 4px 4px; position: relative; }
+        .option-header.recommended { color: var(--accent); }
+        .option-header.recommended::after { content: '\2605'; margin-left: 3px; font-size: 9px; }
+        .party-label { text-align: left; padding: 0 6px; font-size: clamp(10px, 1.2vw, 13px); font-weight: 600; white-space: nowrap; color: var(--text); border-left: 3px solid var(--tile-border); min-width: 70px; width: 10vw; max-width: 130px; }
+        .party-label.harborco-label { border-left-color: var(--accent); color: var(--accent); }
 
-        .issue-group-header {
-            background: var(--card); color: var(--accent);
-            font-size: 14px; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 1px;
-            padding: 10px 6px;
-            border-radius: 6px 6px 0 0;
-            border-bottom: 2px solid var(--accent);
-        }
-
-        .option-header {
-            background: var(--card); color: var(--text-dim);
-            font-size: 11px; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 0.3px;
-            padding: 8px 4px; line-height: 1.3;
-            border-radius: 0 0 4px 4px;
-        }
-
-        .party-label {
-            text-align: left; padding: 0 8px;
-            font-size: 13px; font-weight: 600;
-            white-space: nowrap; color: var(--text);
-            border-left: 3px solid var(--tile-border);
-            min-width: 100px; max-width: 120px;
-        }
-
-        .party-label.harborco-label {
-            border-left-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .matrix-cell {
-            width: 56px; height: 50px;
-            background: var(--tile);
-            border: 2px solid var(--tile-border);
-            border-radius: 6px; cursor: pointer;
-            transition: all 0.15s; position: relative;
-        }
-
+        /* ── SCORE CELLS ── */
+        .matrix-cell { min-width: 40px; height: 42px; background: var(--tile); border: 2px solid var(--tile-border); border-radius: 6px; cursor: pointer; transition: all 0.15s; font-size: clamp(14px, 2vw, 20px); font-weight: 700; color: var(--text-dim); }
         .matrix-cell:hover { border-color: var(--accent); background: var(--tile-hover); }
+        .matrix-cell.s1 { background: rgba(52,211,153,0.06); border-color: rgba(52,211,153,0.15); color: rgba(52,211,153,0.5); }
+        .matrix-cell.s2 { background: rgba(52,211,153,0.12); border-color: rgba(52,211,153,0.3); color: rgba(52,211,153,0.7); }
+        .matrix-cell.s3 { background: rgba(52,211,153,0.2); border-color: rgba(52,211,153,0.5); color: var(--green); }
+        .matrix-cell.s4 { background: rgba(52,211,153,0.28); border-color: var(--green); color: var(--green); font-weight: 800; }
+        .matrix-cell.s5 { background: rgba(52,211,153,0.36); border-color: var(--green); color: var(--green); font-weight: 800; box-shadow: 0 0 8px rgba(52,211,153,0.2); }
 
-        .matrix-cell.checked {
-            background: var(--green-bg);
-            border-color: var(--green);
-        }
-
-        .matrix-cell.checked::after {
-            content: '\2713'; font-size: 20px;
-            font-weight: 700; color: var(--green);
-        }
-
-        /* ── OVERLAP ROW ── */
-        .overlap-label {
-            text-align: left; padding: 0 8px;
-            font-size: 13px; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 0.5px;
-            color: var(--text-dim);
-            border-left: 3px solid transparent;
-            white-space: nowrap;
-        }
-
-        .overlap-cell {
-            font-size: 16px; font-weight: 700;
-            padding: 8px; border-radius: 6px;
-            color: var(--text-dim);
-            background: var(--tile);
-            border: 2px solid var(--tile-border);
-            transition: all 0.2s;
-        }
-
-        .overlap-cell.high {
-            color: var(--green); background: var(--green-bg);
-            border-color: var(--green);
-            box-shadow: 0 0 12px rgba(52, 211, 153, 0.15);
-        }
-
-        .overlap-cell.medium {
-            color: var(--amber); background: var(--amber-bg);
-            border-color: rgba(251, 191, 36, 0.25);
-        }
-
+        /* ── OVERLAP / TOTAL SCORE ROW ── */
+        .overlap-label { text-align: left; padding: 0 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dim); border-left: 3px solid transparent; white-space: nowrap; }
+        .overlap-cell { font-size: 15px; font-weight: 700; padding: 6px; border-radius: 6px; color: var(--text-dim); background: var(--tile); border: 2px solid var(--tile-border); transition: all 0.2s; }
+        .overlap-cell.high { color: var(--green); background: var(--green-bg); border-color: var(--green); box-shadow: 0 0 8px rgba(52,211,153,0.15); }
+        .overlap-cell.medium { color: var(--amber); background: var(--amber-bg); border-color: rgba(251,191,36,0.25); }
         .overlap-cell.low { color: var(--text-dim); }
 
-        /* ── CURRENT PROPOSAL ROW ── */
-        .proposal-label {
-            text-align: left; padding: 0 8px;
-            font-size: 12px; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 0.5px;
-            color: var(--accent);
-            border-left: 3px solid var(--accent);
-            white-space: nowrap;
-        }
-
-        .proposal-cell {
-            width: 56px; height: 42px;
-            background: var(--tile);
-            border: 2px solid var(--tile-border);
-            border-radius: 6px; cursor: pointer;
-            transition: all 0.15s;
-        }
-
+        /* ── PROPOSAL ROW ── */
+        .proposal-label { text-align: left; padding: 0 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--accent); border-left: 3px solid var(--accent); white-space: nowrap; }
+        .proposal-cell { min-width: 40px; height: 36px; background: var(--tile); border: 2px solid var(--tile-border); border-radius: 6px; cursor: pointer; transition: all 0.15s; }
         .proposal-cell:hover { border-color: var(--accent); background: var(--tile-hover); }
+        .proposal-cell.active { background: rgba(34,211,238,0.15); border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+        .proposal-cell.active::after { content: '\25C6'; font-size: 14px; color: var(--accent); }
 
-        .proposal-cell.active {
-            background: rgba(34, 211, 238, 0.15);
-            border-color: var(--accent);
-            box-shadow: 0 0 10px var(--accent-glow);
-        }
+        /* ── PROPOSAL DISPLAY ── */
+        .proposal-display-cell { background: var(--accent); border-radius: 6px; padding: 8px 4px; height: 72px; text-align: center; vertical-align: middle; }
+        .proposal-display-cell span { font-size: 16px; font-weight: 700; color: var(--bg); text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.2; }
+        .proposal-display-corner { background: transparent; }
 
-        .proposal-cell.active::after {
-            content: '\25C6'; font-size: 16px; color: var(--accent);
-        }
-
-        .sep-row td {
-            height: 6px; padding: 0;
-            border: none; background: transparent;
-        }
-
+        .sep-row td { height: 4px; padding: 0; border: none; background: transparent; }
         .corner { background: transparent; }
+        .issue-gap { width: 10px; min-width: 10px; background: transparent; border: none; padding: 0; }
 
-        .issue-gap {
-            width: 12px; min-width: 12px;
-            background: transparent; border: none; padding: 0;
-        }
-
-        /* ── BOTTOM PANEL (parties + submit) ── */
-        .bottom-panel {
-            flex-shrink: 0;
-            background: var(--card);
-            border: 1px solid var(--tile-border);
-            border-radius: 8px;
-            padding: 14px 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .panel-top-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .proposal-badge {
-            display: flex; align-items: center; gap: 6px;
-            font-size: 13px; font-weight: 700;
-            color: var(--accent); letter-spacing: 1px;
-            text-transform: uppercase;
-            flex-shrink: 0;
-        }
-
-        .proposal-badge-label {
-            color: var(--text-dim); font-size: 11px; font-weight: 600;
-        }
-
-        .legend {
-            display: flex; gap: 12px; align-items: center;
-            margin-left: auto;
-        }
-
-        .legend-item {
-            display: flex; align-items: center; gap: 5px;
-            font-size: 11px; font-weight: 600; color: var(--text-dim);
-            text-transform: uppercase; letter-spacing: 0.3px;
-        }
-
-        .legend-swatch { width: 12px; height: 12px; border-radius: 3px; }
-        .swatch-high { background: var(--green-bg); border: 2px solid var(--green); }
-        .swatch-medium { background: var(--amber-bg); border: 2px solid rgba(251,191,36,0.25); }
-        .swatch-empty { background: var(--tile); border: 2px solid var(--tile-border); }
-
-        /* ── PROPOSAL DISPLAY ROW (in matrix table) ── */
-        .proposal-display-cell {
-            background: var(--accent);
-            border-radius: 6px;
-            padding: 12px 4px;
-            height: 96px;
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        .proposal-display-cell span {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--bg);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            line-height: 1.2;
-        }
-
-        .proposal-display-corner {
-            background: transparent;
-        }
-
-        .parties-row {
-            display: flex;
-            gap: 6px;
-            width: 100%;
-        }
-
-        .party-card {
-            background: var(--tile);
-            border: 1px solid var(--tile-border);
-            border-radius: 6px;
-            padding: 10px 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            transition: all 0.15s;
-            flex: 1;
-            min-width: 0;
-        }
-
-        .party-card:hover { border-color: rgba(34, 211, 238, 0.3); }
-
-        .party-card-name {
-            font-size: 13px; font-weight: 600;
-            color: var(--text); white-space: nowrap;
-            overflow: hidden; text-overflow: ellipsis;
-        }
-
-        .party-card.harborco {
-            border-color: var(--accent);
-            background: rgba(34, 211, 238, 0.08);
-        }
-
+        /* ── BOTTOM PANEL ── */
+        .bottom-panel { flex-shrink: 0; background: var(--card); border: 1px solid var(--tile-border); border-radius: 8px; padding: 10px 14px; display: flex; flex-direction: column; gap: 8px; }
+        .panel-top-row { display: flex; align-items: center; gap: 12px; }
+        .proposal-badge { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; flex-shrink: 0; }
+        .proposal-badge-label { color: var(--text-dim); font-size: 11px; font-weight: 600; }
+        .proposal-pts { font-size: 11px; font-weight: 700; color: var(--green); margin-left: 4px; }
+        .legend { display: flex; gap: 10px; align-items: center; margin-left: auto; }
+        .legend-item { display: flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.3px; }
+        .legend-swatch { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+        .parties-row { display: flex; gap: 6px; width: 100%; }
+        .party-card { background: var(--tile); border: 1px solid var(--tile-border); border-radius: 6px; padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; cursor: pointer; transition: all 0.15s; flex: 1; min-width: 0; }
+        .party-card:hover { border-color: rgba(34,211,238,0.3); }
+        .party-card-top { display: flex; align-items: center; justify-content: space-between; gap: 4px; }
+        .party-card-name { font-size: 12px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .party-card-score { font-size: 11px; font-weight: 700; color: var(--accent); white-space: nowrap; flex-shrink: 0; }
+        .party-card.harborco { border-color: var(--accent); background: rgba(34,211,238,0.08); }
         .party-card.harborco .party-card-name { color: var(--accent); }
-
-        .party-badge {
-            padding: 6px 12px; border-radius: 3px;
-            font-size: 13px; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 0.5px;
-            text-align: center; transition: all 0.15s;
-        }
-
+        .party-badge { padding: 4px 10px; border-radius: 3px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; transition: all 0.15s; }
         .badge-undecided { background: var(--gray-badge); color: var(--text-dim); }
         .badge-supports { background: var(--green-bg); color: var(--green); border: 1px solid rgba(52,211,153,0.25); }
         .badge-opposed { background: var(--red-bg); color: var(--red); border: 1px solid rgba(248,113,113,0.25); }
-
-        .bottom-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
+        .bottom-actions { display: flex; align-items: center; gap: 10px; }
         .status-zone { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-
         .pip-group { display: flex; flex-direction: column; align-items: center; gap: 2px; }
         .pips { display: flex; gap: 3px; }
-
-        .pip {
-            width: 14px; height: 14px; border-radius: 3px;
-            background: var(--tile-border); transition: all 0.2s;
-        }
-
-        .pip.on {
-            background: var(--green);
-            box-shadow: 0 0 6px rgba(52, 211, 153, 0.4);
-        }
-
-        .pip-label { font-size: 11px; font-weight: 600; color: var(--text-dim); }
-
-        .license-badge {
-            padding: 6px 14px;
-            background: linear-gradient(135deg, var(--green), #059669);
-            color: var(--bg); border-radius: 6px;
-            font-size: 12px; font-weight: 800;
-            letter-spacing: 1.5px; text-transform: uppercase;
-            display: none;
-            box-shadow: 0 0 20px rgba(52, 211, 153, 0.25);
-            animation: glow 2s ease-in-out infinite;
-        }
-
+        .pip { width: 14px; height: 14px; border-radius: 3px; background: var(--tile-border); transition: all 0.2s; }
+        .pip.on { background: var(--green); box-shadow: 0 0 6px rgba(52,211,153,0.4); }
+        .pip-label { font-size: 10px; font-weight: 600; color: var(--text-dim); }
+        .license-badge { padding: 5px 12px; background: linear-gradient(135deg,var(--green),#059669); color: var(--bg); border-radius: 6px; font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; display: none; box-shadow: 0 0 20px rgba(52,211,153,0.25); animation: glow 2s ease-in-out infinite; }
         .license-badge.show { display: block; }
-
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 16px rgba(52,211,153,0.25); }
-            50% { box-shadow: 0 0 28px rgba(52,211,153,0.45); }
-        }
-
+        @keyframes glow { 0%,100% { box-shadow: 0 0 16px rgba(52,211,153,0.25); } 50% { box-shadow: 0 0 28px rgba(52,211,153,0.45); } }
         .bottom-actions-spacer { flex: 1; }
-
-        .clear-btn, .submit-btn {
-            padding: 8px 18px;
-            border-radius: 6px;
-            font-size: 13px; font-weight: 700;
-            cursor: pointer; font-family: 'Outfit', sans-serif;
-            text-transform: uppercase; letter-spacing: 0.5px;
-            transition: all 0.15s; flex-shrink: 0;
-        }
-
-        .clear-btn {
-            background: var(--tile); color: var(--text-dim);
-            border: 1px solid var(--tile-border);
-        }
-
+        .clear-btn, .submit-btn { padding: 7px 16px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Outfit',sans-serif; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.15s; flex-shrink: 0; }
+        .clear-btn { background: var(--tile); color: var(--text-dim); border: 1px solid var(--tile-border); }
         .clear-btn:hover { border-color: var(--red); color: var(--red); }
-
-        .submit-btn {
-            background: var(--accent); color: var(--bg);
-            border: none; font-weight: 800;
-            letter-spacing: 1px; padding: 10px 22px;
-        }
-
-        .submit-btn:hover {
-            filter: brightness(1.15);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 16px var(--accent-glow);
-        }
-
+        .submit-btn { background: var(--accent); color: var(--bg); border: none; font-weight: 800; letter-spacing: 1px; padding: 8px 20px; }
+        .submit-btn:hover { filter: brightness(1.15); transform: translateY(-1px); box-shadow: 0 4px 16px var(--accent-glow); }
         .submit-btn:active { transform: translateY(0); }
+        .rounds-zone { display: flex; align-items: center; gap: 5px; margin-left: 10px; }
+        .round-indicator { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 34px; }
+        .round-emoji { width: 30px; height: 30px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: all 0.2s; }
+        .round-emoji.pending { background: var(--tile); border: 2px solid var(--tile-border); color: var(--text-dim); font-size: 14px; }
+        .round-emoji.fail { background: var(--red-bg); border: 2px solid rgba(248,113,113,0.25); }
+        .round-emoji.ok { background: var(--amber-bg); border: 2px solid rgba(251,191,36,0.25); }
+        .round-emoji.pass { background: var(--green-bg); border: 2px solid rgba(52,211,153,0.25); }
+        .round-label { font-size: 9px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
 
-        /* ── ROUND INDICATORS ── */
-        .rounds-zone {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-left: 12px;
-        }
-
-        .round-indicator {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-            min-width: 40px;
-        }
-
-        .round-emoji {
-            width: 34px;
-            height: 34px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            transition: all 0.2s;
-        }
-
-        .round-emoji.pending {
-            background: var(--tile);
-            border: 2px solid var(--tile-border);
-            color: var(--text-dim);
-            font-size: 16px;
-        }
-
-        .round-emoji.fail {
-            background: var(--red-bg);
-            border: 2px solid rgba(248, 113, 113, 0.25);
-        }
-
-        .round-emoji.ok {
-            background: var(--amber-bg);
-            border: 2px solid rgba(251, 191, 36, 0.25);
-        }
-
-        .round-emoji.pass {
-            background: var(--green-bg);
-            border: 2px solid rgba(52, 211, 153, 0.25);
-        }
-
-        .round-label {
-            font-size: 9px;
-            font-weight: 700;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* ── RESPONSIVE ── */
-        @media (max-height: 900px) {
-            body { padding: 8px 16px; gap: 5px; }
-            .header { height: 32px; }
-            .header-title { font-size: 22px; }
-            .matrix-cell { height: 38px; width: 50px; }
-            .option-header { font-size: 10px; }
-            .bottom-panel { padding: 8px 12px; gap: 6px; }
-        }
-
-        @media (max-height: 768px) {
-            .matrix-cell { height: 32px; width: 44px; }
-            .party-label { font-size: 12px; min-width: 90px; max-width: 100px; }
-            .issue-group-header { font-size: 12px; padding: 6px 2px; }
-            .option-header { font-size: 9px; padding: 4px 2px; }
+        @media (max-width: 900px) {
+            body { padding: 8px 10px; gap: 6px; }
+            .header-title { font-size: 20px; }
+            .issue-group-header { font-size: 11px; padding: 6px 3px; }
+            .option-header { font-size: 8px; padding: 4px 1px; }
+            .matrix-cell { height: 36px; min-width: 32px; }
+            .proposal-display-cell { height: 56px; }
+            .proposal-display-cell span { font-size: 13px; }
+            .bottom-panel { padding: 8px 10px; gap: 6px; }
             .party-card { padding: 6px 8px; }
             .party-card-name { font-size: 11px; }
-            .party-badge { font-size: 11px; padding: 3px 8px; }
-            .proposal-display-cell { height: 72px; padding: 6px 2px; }
-            .proposal-display-cell span { font-size: 14px; }
+            .party-badge { font-size: 10px; padding: 3px 6px; }
+            .issue-gap { width: 6px; min-width: 6px; }
+        }
+        @media (max-width: 600px) {
+            body { padding: 6px 6px; gap: 4px; }
+            .header { flex-direction: column; align-items: flex-start; height: auto; gap: 6px; }
+            .header-right { width: 100%; justify-content: flex-start; gap: 2px; flex-wrap: wrap; }
+            .header-title { font-size: 16px; letter-spacing: 0.5px; }
+            .tab-link { padding: 4px 10px; font-size: 11px; }
+            .theme-toggle { width: 30px; height: 30px; font-size: 14px; margin-left: 4px; }
+            .issue-group-header { font-size: 9px; padding: 4px 2px; letter-spacing: 0.3px; }
+            .option-header { font-size: 7px; padding: 3px 1px; }
+            .matrix-cell { height: 30px; min-width: 26px; border-radius: 4px; }
+            .overlap-cell { font-size: 12px; padding: 4px; }
+            .proposal-cell { height: 28px; min-width: 26px; }
+            .proposal-display-cell { height: 40px; padding: 4px 2px; }
+            .proposal-display-cell span { font-size: 10px; }
+            .party-label { min-width: 55px; width: 55px; font-size: 9px; padding: 0 3px; }
+            .issue-gap { width: 4px; min-width: 4px; }
+            .parties-row { flex-wrap: wrap; }
+            .party-card { min-width: calc(33% - 4px); flex: 0 0 calc(33% - 4px); }
+            .bottom-actions { flex-wrap: wrap; gap: 6px; }
+            .rounds-zone { margin-left: 0; }
+            .round-indicator { min-width: 28px; }
+            .round-emoji { width: 24px; height: 24px; font-size: 12px; }
+            .proposal-label { font-size: 9px; }
+            .overlap-label { font-size: 10px; }
+            .panel-top-row { flex-wrap: wrap; }
+            .legend { margin-left: 0; }
         }
 
-        /* EMOJI RAIN */
-        .emoji-rain {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none; z-index: 9999;
-            overflow: hidden;
-        }
-
-        .emoji-drop {
-            position: absolute; top: -60px;
-            font-size: 42px;
-            animation: fall linear forwards;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            80% { opacity: 1; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-        }
+        .emoji-rain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; overflow: hidden; }
+        .emoji-drop { position: absolute; top: -60px; font-size: 42px; animation: fall linear forwards; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4)); }
+        @keyframes fall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 80% { opacity: 1; } 100% { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
     </style>
 </head>
 <body>
@@ -605,11 +228,13 @@
             <div class="proposal-badge">
                 <span class="proposal-badge-label">Current Proposal:</span>
                 <span id="proposalText">A1 B1 C4 D1 E5</span>
+                <span class="proposal-pts" id="proposalPts"></span>
             </div>
             <div class="legend">
-                <div class="legend-item"><div class="legend-swatch swatch-high"></div>All/Most</div>
-                <div class="legend-item"><div class="legend-swatch swatch-medium"></div>Some</div>
-                <div class="legend-item"><div class="legend-swatch swatch-empty"></div>None</div>
+                <div class="legend-item"><div class="legend-swatch" style="background:var(--tile);border:2px solid var(--tile-border)"></div>0</div>
+                <div class="legend-item"><div class="legend-swatch" style="background:rgba(52,211,153,0.12);border:2px solid rgba(52,211,153,0.3)"></div>Low</div>
+                <div class="legend-item"><div class="legend-swatch" style="background:rgba(52,211,153,0.28);border:2px solid var(--green)"></div>High</div>
+                <div class="legend-item" style="margin-left:4px;color:var(--accent);">&#9733; = Recommended</div>
             </div>
         </div>
         <div class="parties-row" id="partiesRow"></div>
@@ -630,24 +255,19 @@
     </div>
 
     <script>
-        // ── THEME TOGGLE ──
+        // ── THEME ──
         var savedTheme = localStorage.getItem('harborco_theme') || 'dark';
         if (savedTheme === 'light') document.documentElement.classList.add('light');
-
         var toggleBtn = document.getElementById('themeToggle');
-        function updateToggleIcon() {
-            var isLight = document.documentElement.classList.contains('light');
-            toggleBtn.textContent = isLight ? '\u2600\uFE0F' : '\uD83C\uDF19';
-        }
+        function updateToggleIcon() { toggleBtn.textContent = document.documentElement.classList.contains('light') ? '\u2600\uFE0F' : '\uD83C\uDF19'; }
         updateToggleIcon();
-
         toggleBtn.addEventListener('click', function() {
             document.documentElement.classList.toggle('light');
-            var isLight = document.documentElement.classList.contains('light');
-            localStorage.setItem('harborco_theme', isLight ? 'light' : 'dark');
+            localStorage.setItem('harborco_theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
             updateToggleIcon();
         });
 
+        // ── DATA ──
         var issues = [
             { id: 'A', name: 'A: Industry Mix', options: ['Primarily Dirty', 'Clean/Dirty Mix', 'All Clean'] },
             { id: 'B', name: 'B: Ecological Impact', options: ['Some Harm', 'Maintain & Repair', 'Improve Ecology'] },
@@ -655,7 +275,6 @@
             { id: 'D', name: 'D: Federal Loan', options: ['$3B', '$2B', '$1B', 'No Loan'] },
             { id: 'E', name: 'E: Port Compensation', options: ['$600M', '$450M', '$300M', '$150M', 'None'] },
         ];
-
         var partyDefs = [
             { id: 'env', name: 'Environmental League' },
             { id: 'unions', name: 'Labor Unions' },
@@ -664,116 +283,153 @@
             { id: 'gov', name: 'Gov. Sherwood' },
             { id: 'harborco', name: 'Harborco' },
         ];
-
         var DEFAULTS = { A: 0, B: 0, C: 3, D: 0, E: 4 };
-
+        var DEFAULT_PARTIES = { env: 0, unions: 0, ports: 0, dcr: 0, gov: 0, harborco: 1 };
         var statuses = [
             { cls: 'badge-undecided', text: 'Undecided' },
             { cls: 'badge-supports', text: 'Supports' },
             { cls: 'badge-opposed', text: 'Opposed' }
         ];
 
-        var DEFAULT_PARTIES = { env: 0, unions: 0, ports: 0, dcr: 0, gov: 0, harborco: 1 };
-
-        function loadProposal() {
-            try {
-                var s = JSON.parse(localStorage.getItem('harborco_proposal'));
-                if (s && typeof s === 'object') return s;
-            } catch(e) {}
-            return Object.assign({}, DEFAULTS);
-        }
-
-        function loadPartyState() {
-            try {
-                var s = JSON.parse(localStorage.getItem('harborco_parties'));
-                if (s && typeof s === 'object') return s;
-            } catch(e) {}
-            return Object.assign({}, DEFAULT_PARTIES);
-        }
-
-        function loadPriorities() {
+        // Scores: priorities[partyId][issueId][optIdx] = number
+        function emptyScores() {
             var p = {};
-            try {
-                var s = JSON.parse(localStorage.getItem('harborco_priorities'));
-                if (s && typeof s === 'object') {
-                    partyDefs.forEach(function(pd) {
-                        p[pd.id] = {};
-                        issues.forEach(function(iss) {
-                            p[pd.id][iss.id] = new Set(s[pd.id] && s[pd.id][iss.id] ? s[pd.id][iss.id] : []);
-                        });
-                    });
-                    return p;
-                }
-            } catch(e) {}
             partyDefs.forEach(function(pd) {
                 p[pd.id] = {};
                 issues.forEach(function(iss) {
-                    p[pd.id][iss.id] = new Set();
+                    p[pd.id][iss.id] = {};
+                    for (var i = 0; i < iss.options.length; i++) p[pd.id][iss.id][i] = 0;
                 });
             });
             return p;
         }
 
-        function savePriorities() {
-            var obj = {};
-            partyDefs.forEach(function(pd) {
-                obj[pd.id] = {};
-                issues.forEach(function(iss) {
-                    obj[pd.id][iss.id] = Array.from(priorities[pd.id][iss.id]);
-                });
-            });
-            localStorage.setItem('harborco_priorities', JSON.stringify(obj));
+        function loadScores() {
+            try {
+                var s = JSON.parse(localStorage.getItem('harborco_scores'));
+                if (s && typeof s === 'object' && s[partyDefs[0].id]) return s;
+            } catch(e) {}
+            return emptyScores();
         }
 
-        function savePartyState() {
-            localStorage.setItem('harborco_parties', JSON.stringify(partyState));
+        function saveScores() { localStorage.setItem('harborco_scores', JSON.stringify(priorities)); }
+
+        function loadProposal() {
+            try { var s = JSON.parse(localStorage.getItem('harborco_proposal')); if (s && typeof s === 'object') return s; } catch(e) {}
+            return Object.assign({}, DEFAULTS);
         }
+        function loadPartyState() {
+            try { var s = JSON.parse(localStorage.getItem('harborco_parties')); if (s && typeof s === 'object') return s; } catch(e) {}
+            return Object.assign({}, DEFAULT_PARTIES);
+        }
+        function saveProposal() { localStorage.setItem('harborco_proposal', JSON.stringify(proposal)); }
+        function savePartyState() { localStorage.setItem('harborco_parties', JSON.stringify(partyState)); }
 
         var proposal = loadProposal();
         var partyState = loadPartyState();
-        var priorities = loadPriorities();
+        var priorities = loadScores();
 
         var totalOptions = issues.reduce(function(s, iss) { return s + iss.options.length; }, 0);
         var gapCount = issues.length - 1;
         var totalCols = totalOptions + gapCount + 1;
 
-        function el(tag, cls, text) {
-            var e = document.createElement(tag);
-            if (cls) e.className = cls;
-            if (text) e.textContent = text;
-            return e;
+        function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; }
+        function addGap(row, tag) { row.appendChild(el(tag, 'issue-gap')); }
+
+        function maxScore(iss) { return iss.options.length; }
+
+        function scoreCls(val, max) {
+            if (val === 0) return '';
+            var pct = val / max;
+            if (pct <= 0.2) return 's1';
+            if (pct <= 0.4) return 's2';
+            if (pct <= 0.6) return 's3';
+            if (pct <= 0.8) return 's4';
+            return 's5';
         }
 
-        function addGap(row, tag) {
-            row.appendChild(el(tag, 'issue-gap'));
-        }
-
-        function saveProposal() {
-            localStorage.setItem('harborco_proposal', JSON.stringify(proposal));
-        }
-
+        // ── UPDATE HELPERS ──
         function updateProposalBadge() {
-            var parts = issues.map(function(iss) {
-                return iss.id + (proposal[iss.id] + 1);
-            });
+            var parts = issues.map(function(iss) { return iss.id + (proposal[iss.id] + 1); });
             document.getElementById('proposalText').textContent = parts.join(' ');
+            // Total pts for current proposal
+            var total = 0;
+            partyDefs.forEach(function(p) {
+                issues.forEach(function(iss) { total += (priorities[p.id][iss.id][proposal[iss.id]] || 0); });
+            });
+            document.getElementById('proposalPts').textContent = '(' + total + ' pts)';
         }
 
         function updateProposalRow() {
             document.querySelectorAll('.proposal-cell').forEach(function(cell) {
-                var issId = cell.dataset.issue;
-                var opt = parseInt(cell.dataset.opt);
-                cell.classList.toggle('active', proposal[issId] === opt);
+                cell.classList.toggle('active', proposal[cell.dataset.issue] === parseInt(cell.dataset.opt));
             });
             updateProposalBadge();
-            if (document.querySelector('.proposal-display-value')) updateProposalDisplay();
+            updateProposalDisplay();
+            updatePartyScores();
+        }
+
+        function updateProposalDisplay() {
+            document.querySelectorAll('.proposal-display-value').forEach(function(txt) {
+                var iss = issues.find(function(i) { return i.id === txt.dataset.issue; });
+                txt.textContent = iss.options[proposal[iss.id]];
+            });
+        }
+
+        function updateCellDisplay(td) {
+            var val = priorities[td.dataset.party][td.dataset.issue][parseInt(td.dataset.opt)] || 0;
+            var iss = issues.find(function(i) { return i.id === td.dataset.issue; });
+            td.textContent = val;
+            td.className = 'matrix-cell ' + scoreCls(val, maxScore(iss));
+        }
+
+        function updateOverlap() {
+            var maxPossible = partyDefs.length; // max per option = parties * maxScore, but we show sum
+            issues.forEach(function(iss) {
+                var ms = maxScore(iss);
+                var maxSum = partyDefs.length * ms;
+                iss.options.forEach(function(_, optIdx) {
+                    var sum = 0;
+                    partyDefs.forEach(function(p) { sum += (priorities[p.id][iss.id][optIdx] || 0); });
+                    var cell = document.querySelector('.overlap-cell[data-iss="' + iss.id + '"][data-opt="' + optIdx + '"]');
+                    cell.textContent = sum;
+                    cell.classList.remove('high', 'medium', 'low');
+                    if (sum >= maxSum * 0.6) cell.classList.add('high');
+                    else if (sum >= maxSum * 0.3) cell.classList.add('medium');
+                    else cell.classList.add('low');
+                });
+            });
+            updatePerIssueRecs();
+        }
+
+        function updatePerIssueRecs() {
+            // For each issue find the option with highest total score
+            document.querySelectorAll('.option-header').forEach(function(th) { th.classList.remove('recommended'); });
+            issues.forEach(function(iss) {
+                var bestOpt = 0, bestSum = -1;
+                iss.options.forEach(function(_, optIdx) {
+                    var sum = 0;
+                    partyDefs.forEach(function(p) { sum += (priorities[p.id][iss.id][optIdx] || 0); });
+                    if (sum > bestSum) { bestSum = sum; bestOpt = optIdx; }
+                });
+                if (bestSum > 0) {
+                    var th = document.querySelector('.option-header[data-iss="' + iss.id + '"][data-opt="' + bestOpt + '"]');
+                    if (th) th.classList.add('recommended');
+                }
+
+            });
+        }
+
+        function updateSupport() {
+            var total = Object.values(partyState).filter(function(v) { return v === 1; }).length;
+            document.querySelectorAll('.pip').forEach(function(p, i) { p.classList.toggle('on', i < total); });
+            document.getElementById('supportLabel').textContent = total + ' / 6';
+            document.getElementById('licenseBadge').classList.toggle('show', total >= 5);
         }
 
         // ── BUILD MATRIX ──
         function buildMatrix() {
             var table = document.getElementById('matrix');
-
-            // Issue group headers
             var headerRow = el('tr');
             headerRow.appendChild(el('th', 'corner'));
             issues.forEach(function(iss, i) {
@@ -784,46 +440,54 @@
             });
             table.appendChild(headerRow);
 
-            // Option sub-headers
             var optRow = el('tr');
             optRow.appendChild(el('th', 'corner'));
             issues.forEach(function(iss, i) {
                 if (i > 0) addGap(optRow, 'th');
-                iss.options.forEach(function(opt) {
-                    optRow.appendChild(el('th', 'option-header', opt));
+                iss.options.forEach(function(opt, optIdx) {
+                    var th = el('th', 'option-header', opt);
+                    th.dataset.iss = iss.id;
+                    th.dataset.opt = optIdx;
+                    optRow.appendChild(th);
                 });
             });
             table.appendChild(optRow);
 
-            // Party priority rows
             partyDefs.forEach(function(p) {
                 var tr = el('tr');
-                var labelCls = 'party-label' + (p.id === 'harborco' ? ' harborco-label' : '');
-                tr.appendChild(el('td', labelCls, p.name));
+                tr.appendChild(el('td', 'party-label' + (p.id === 'harborco' ? ' harborco-label' : ''), p.name));
                 issues.forEach(function(iss, i) {
                     if (i > 0) addGap(tr, 'td');
+                    var ms = maxScore(iss);
                     iss.options.forEach(function(_, optIdx) {
-                        var td = el('td', 'matrix-cell');
+                        var val = priorities[p.id][iss.id][optIdx] || 0;
+                        var td = el('td', 'matrix-cell ' + scoreCls(val, ms), String(val));
                         td.dataset.party = p.id;
                         td.dataset.issue = iss.id;
                         td.dataset.opt = optIdx;
-                        if (priorities[p.id][iss.id].has(optIdx)) td.classList.add('checked');
-                        td.addEventListener('click', function() { toggleCell(td, p.id, iss.id, optIdx); });
+                        td.addEventListener('click', function() {
+                            var cur = priorities[p.id][iss.id][optIdx] || 0;
+                            priorities[p.id][iss.id][optIdx] = (cur + 1) % (ms + 1);
+                            updateCellDisplay(td);
+                            saveScores();
+                            updateOverlap();
+                            updateProposalBadge();
+                            updatePartyScores();
+                        });
                         tr.appendChild(td);
                     });
                 });
                 table.appendChild(tr);
             });
 
-            // Separator
             var sep1 = el('tr', 'sep-row');
             var sep1td = el('td'); sep1td.colSpan = totalCols;
             sep1.appendChild(sep1td);
             table.appendChild(sep1);
 
-            // Overlap row (FIRST)
+            // Overlap (total score) row
             var overlapRow = el('tr');
-            overlapRow.appendChild(el('td', 'overlap-label', 'Overlap'));
+            overlapRow.appendChild(el('td', 'overlap-label', 'Total Score'));
             issues.forEach(function(iss, i) {
                 if (i > 0) addGap(overlapRow, 'td');
                 iss.options.forEach(function(_, optIdx) {
@@ -835,7 +499,7 @@
             });
             table.appendChild(overlapRow);
 
-            // Current Proposal row (AFTER overlap)
+            // Proposal row
             var proposalRow = el('tr');
             proposalRow.appendChild(el('td', 'proposal-label', 'Current Proposal'));
             issues.forEach(function(iss, i) {
@@ -843,7 +507,7 @@
                 iss.options.forEach(function(_, optIdx) {
                     var td = el('td', 'proposal-cell');
                     td.dataset.issue = iss.id;
-                    td.dataset.opt = optIdx;
+                    td.dataset.opt = String(optIdx);
                     if (proposal[iss.id] === optIdx) td.classList.add('active');
                     td.addEventListener('click', function() {
                         proposal[iss.id] = optIdx;
@@ -855,7 +519,7 @@
             });
             table.appendChild(proposalRow);
 
-            // Proposal display row (large text showing current selections)
+            // Display row
             var displayRow = el('tr');
             displayRow.appendChild(el('td', 'proposal-display-corner'));
             issues.forEach(function(iss, i) {
@@ -871,21 +535,26 @@
             table.appendChild(displayRow);
         }
 
-        function updateProposalDisplay() {
-            document.querySelectorAll('.proposal-display-value').forEach(function(txt) {
-                var issId = txt.dataset.issue;
-                var iss = issues.find(function(i) { return i.id === issId; });
-                txt.textContent = iss.options[proposal[issId]];
+        function updatePartyScores() {
+            partyDefs.forEach(function(p) {
+                var total = 0;
+                issues.forEach(function(iss) { total += (priorities[p.id][iss.id][proposal[iss.id]] || 0); });
+                var scoreEl = document.getElementById('pscore-' + p.id);
+                if (scoreEl) scoreEl.textContent = total + ' pts';
             });
         }
 
-        // ── BUILD PARTY CARDS ──
         function buildPartyCards() {
             var row = document.getElementById('partiesRow');
             partyDefs.forEach(function(p) {
                 var card = el('div', 'party-card' + (p.id === 'harborco' ? ' harborco' : ''));
                 card.dataset.party = p.id;
-                card.appendChild(el('span', 'party-card-name', p.name));
+                var nameRow = el('div', 'party-card-top');
+                nameRow.appendChild(el('span', 'party-card-name', p.name));
+                var scoreSpan = el('span', 'party-card-score', '0 pts');
+                scoreSpan.id = 'pscore-' + p.id;
+                nameRow.appendChild(scoreSpan);
+                card.appendChild(nameRow);
                 var s = statuses[partyState[p.id]];
                 card.appendChild(el('span', 'party-badge ' + s.cls, s.text));
                 card.addEventListener('click', function() {
@@ -901,133 +570,69 @@
             });
         }
 
-        // ── BUILD PIPS ──
         function buildPips() {
             var pipsEl = document.getElementById('pips');
-            for (var i = 0; i < 6; i++) {
-                var pip = el('div', 'pip');
-                if (i === 0) pip.classList.add('on');
-                pipsEl.appendChild(pip);
-            }
-        }
-
-        function toggleCell(td, partyId, issueId, optIdx) {
-            var set = priorities[partyId][issueId];
-            if (set.has(optIdx)) {
-                set.delete(optIdx);
-                td.classList.remove('checked');
-            } else {
-                set.add(optIdx);
-                td.classList.add('checked');
-            }
-            savePriorities();
-            updateOverlap();
-        }
-
-        function updateOverlap() {
-            issues.forEach(function(iss) {
-                iss.options.forEach(function(_, optIdx) {
-                    var count = partyDefs.filter(function(p) { return priorities[p.id][iss.id].has(optIdx); }).length;
-                    var cell = document.querySelector('.overlap-cell[data-iss="' + iss.id + '"][data-opt="' + optIdx + '"]');
-                    cell.textContent = count;
-                    cell.classList.remove('high', 'medium', 'low');
-                    if (count >= 5) cell.classList.add('high');
-                    else if (count >= 3) cell.classList.add('medium');
-                    else cell.classList.add('low');
-                });
-            });
-        }
-
-        function updateSupport() {
-            var total = Object.values(partyState).filter(function(v) { return v === 1; }).length;
-            document.querySelectorAll('.pip').forEach(function(p, i) { p.classList.toggle('on', i < total); });
-            document.getElementById('supportLabel').textContent = total + ' / 6';
-            document.getElementById('licenseBadge').classList.toggle('show', total >= 5);
+            for (var i = 0; i < 6; i++) { var pip = el('div', 'pip'); if (i === 0) pip.classList.add('on'); pipsEl.appendChild(pip); }
         }
 
         function resetDefaults() {
-            // Reset priorities
-            partyDefs.forEach(function(p) {
+            // Clear scores in-place (don't reassign — closures reference the objects)
+            partyDefs.forEach(function(pd) {
                 issues.forEach(function(iss) {
-                    priorities[p.id][iss.id].clear();
+                    for (var i = 0; i < iss.options.length; i++) priorities[pd.id][iss.id][i] = 0;
                 });
             });
-            document.querySelectorAll('.matrix-cell.checked').forEach(function(c) { c.classList.remove('checked'); });
-            savePriorities();
+            saveScores();
+            document.querySelectorAll('.matrix-cell').forEach(function(td) { updateCellDisplay(td); });
             updateOverlap();
-
-            // Reset proposal
-            proposal = Object.assign({}, DEFAULTS);
+            Object.keys(DEFAULTS).forEach(function(k) { proposal[k] = DEFAULTS[k]; });
             saveProposal();
             updateProposalRow();
-
-            // Reset party stances
-            partyState = Object.assign({}, DEFAULT_PARTIES);
+            Object.keys(DEFAULT_PARTIES).forEach(function(k) { partyState[k] = DEFAULT_PARTIES[k]; });
             savePartyState();
             document.querySelectorAll('.party-card').forEach(function(card) {
-                var pid = card.dataset.party;
-                var s = statuses[partyState[pid]];
+                var s = statuses[partyState[card.dataset.party]];
                 var badge = card.querySelector('.party-badge');
                 badge.className = 'party-badge ' + s.cls;
                 badge.textContent = s.text;
             });
             updateSupport();
+            updatePartyScores();
         }
 
         function emojiRain(emojis, count, duration) {
-            var container = document.createElement('div');
-            container.className = 'emoji-rain';
-            document.body.appendChild(container);
+            var c = document.createElement('div'); c.className = 'emoji-rain'; document.body.appendChild(c);
             for (var i = 0; i < count; i++) {
-                var drop = document.createElement('div');
-                drop.className = 'emoji-drop';
-                drop.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                drop.style.left = (Math.random() * 100) + '%';
-                drop.style.animationDuration = (1.5 + Math.random() * 2) + 's';
-                drop.style.animationDelay = (Math.random() * 1.2) + 's';
-                drop.style.fontSize = (32 + Math.random() * 28) + 'px';
-                container.appendChild(drop);
+                var d = document.createElement('div'); d.className = 'emoji-drop';
+                d.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                d.style.left = (Math.random()*100)+'%'; d.style.animationDuration = (1.5+Math.random()*2)+'s';
+                d.style.animationDelay = (Math.random()*1.2)+'s'; d.style.fontSize = (32+Math.random()*28)+'px';
+                c.appendChild(d);
             }
-            setTimeout(function() { container.remove(); }, duration);
+            setTimeout(function() { c.remove(); }, duration);
         }
 
-        // ── ROUNDS ──
         var MAX_ROUNDS = 10;
-
-        function loadVotes() {
-            try { return JSON.parse(localStorage.getItem('harborco_votes')) || []; }
-            catch(e) { return []; }
-        }
-
+        function loadVotes() { try { return JSON.parse(localStorage.getItem('harborco_votes')) || []; } catch(e) { return []; } }
         function roundEmoji(support) {
-            // support is total including Harborco; others = support - 1
             var others = support - 1;
-            if (others >= 5) return { emoji: '\uD83E\uDD73', cls: 'pass' };   // party hat (all 5 others)
-            if (others === 4) return { emoji: '\uD83D\uDE0A', cls: 'ok' };    // smiley (4 others)
-            return { emoji: '\uD83D\uDC80', cls: 'fail' };                     // skull (3 or fewer others)
+            if (others >= 5) return { emoji: '\uD83E\uDD73', cls: 'pass' };
+            if (others === 4) return { emoji: '\uD83D\uDE0A', cls: 'ok' };
+            return { emoji: '\uD83D\uDC80', cls: 'fail' };
         }
-
         function renderRounds() {
             var zone = document.getElementById('roundsZone');
             while (zone.firstChild) zone.removeChild(zone.firstChild);
             var votes = loadVotes();
-            var count = Math.max(votes.length + 1, 3);
-            count = Math.min(count, MAX_ROUNDS);
-
+            var count = Math.min(Math.max(votes.length + 1, 3), MAX_ROUNDS);
             for (var i = 0; i < count; i++) {
-                var indicator = el('div', 'round-indicator');
-                var emojiEl = el('div', 'round-emoji');
-                if (i < votes.length) {
-                    var r = roundEmoji(votes[i].support);
-                    emojiEl.textContent = r.emoji;
-                    emojiEl.classList.add(r.cls);
-                } else {
-                    emojiEl.textContent = '?';
-                    emojiEl.classList.add('pending');
-                }
-                indicator.appendChild(emojiEl);
-                indicator.appendChild(el('div', 'round-label', 'R' + (i + 1)));
-                zone.appendChild(indicator);
+                var ind = el('div', 'round-indicator');
+                var em = el('div', 'round-emoji');
+                if (i < votes.length) { var r = roundEmoji(votes[i].support); em.textContent = r.emoji; em.classList.add(r.cls); }
+                else { em.textContent = '?'; em.classList.add('pending'); }
+                ind.appendChild(em);
+                ind.appendChild(el('div', 'round-label', 'R' + (i + 1)));
+                zone.appendChild(ind);
             }
         }
 
@@ -1038,35 +643,20 @@
         updateProposalBadge();
         updateOverlap();
         updateSupport();
+        updatePartyScores();
         renderRounds();
 
         document.getElementById('clearBtn').addEventListener('click', resetDefaults);
-
-        document.getElementById('clearVotesBtn').addEventListener('click', function() {
-            localStorage.removeItem('harborco_votes');
-            renderRounds();
-        });
-
+        document.getElementById('clearVotesBtn').addEventListener('click', function() { localStorage.removeItem('harborco_votes'); renderRounds(); });
         document.getElementById('submitBtn').addEventListener('click', function() {
             var total = Object.values(partyState).filter(function(v) { return v === 1; }).length;
             var votes = loadVotes();
-            votes.push({
-                round: votes.length + 1,
-                proposal: Object.assign({}, proposal),
-                parties: Object.assign({}, partyState),
-                support: total,
-                timestamp: new Date().toISOString()
-            });
+            votes.push({ round: votes.length + 1, proposal: Object.assign({}, proposal), parties: Object.assign({}, partyState), support: total, timestamp: new Date().toISOString() });
             localStorage.setItem('harborco_votes', JSON.stringify(votes));
             renderRounds();
-            // Animation
-            if (total === 6) {
-                emojiRain(['\uD83E\uDD73', '\uD83C\uDF79', '\uD83C\uDF89', '\uD83C\uDF78', '\uD83E\uDD42', '\uD83C\uDF8A'], 40, 3000);
-            } else if (total >= 5) {
-                emojiRain(['\uD83C\uDF89', '\uD83C\uDF8A', '\u2728', '\uD83E\uDD42', '\uD83C\uDF86'], 35, 3000);
-            } else {
-                emojiRain(['\uD83D\uDC80', '\u2620\uFE0F', '\uD83D\uDC80', '\u2620\uFE0F'], 30, 2500);
-            }
+            if (total === 6) emojiRain(['\uD83E\uDD73','\uD83C\uDF79','\uD83C\uDF89','\uD83C\uDF78','\uD83E\uDD42','\uD83C\uDF8A'], 40, 3000);
+            else if (total >= 5) emojiRain(['\uD83C\uDF89','\uD83C\uDF8A','\u2728','\uD83E\uDD42','\uD83C\uDF86'], 35, 3000);
+            else emojiRain(['\uD83D\uDC80','\u2620\uFE0F','\uD83D\uDC80','\u2620\uFE0F'], 30, 2500);
         });
     </script>
 </body>
